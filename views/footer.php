@@ -7,15 +7,24 @@
           </svg>
      </a>
 
-     <ul class="nav col-md-4 justify-content-end">
+     <ul class="nav col-md-4 justify-content-end align-items-center">
+          <?php if (isset($_SESSION['utilisateur'])): ?>
+               <li class="nav-item d-flex align-items-center me-3">
+                    <div class="spinner-grow text-success" style="width: 3rem; height: 3rem;" role="status">
+                         <span class="visually-hidden">Loading...</span>
+                    </div>
+
+                    <span class="text-light">Connecté : <?= htmlspecialchars($_SESSION['utilisateur']['prenom']) ?></span>
+               </li>
+          <?php endif; ?>
           <li class="nav-item"><a href="acceuil.php" class="nav-link px-2 text-light">Acceuil</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-light">Réserver</a></li>
+          <li class="nav-item"><a href="acheter_billet.php" class="nav-link px-2 text-light">Réserver</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-light">CGU</a></li>
           <li class="nav-item"><a href="#" class="nav-link px-2 text-light">CGV</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-light text-light">A propos</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-light">A propos</a></li>
      </ul>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

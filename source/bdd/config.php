@@ -13,5 +13,6 @@ class Config
 
      public function connexion(){
           return $this->bdd;
+
      }
 }

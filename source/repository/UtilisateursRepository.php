@@ -1,14 +1,18 @@
 <?php
 
 namespace repository;
+
+use \PDO;
+use \PDOException;
+
 class UtilisateursRepository
 {
-     private PDO $bdd;
+     private \PDO $bdd;
 
-     public function __construct(PDO $bdd)
+     public function __construct(\PDO $bdd)
      {
           $this->bdd = $bdd;
-          $this->bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $this->bdd->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
      }
 
      public function getUsers(): array
@@ -18,87 +22,82 @@ class UtilisateursRepository
                $query->execute();
                $users = [];
 
-               while ($data = $query->fetch(PDO::FETCH_ASSOC)) {
-                    $users[] = new Users($data);
+               while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
+                    $users[] = new \UtilisateursModel($data);
                }
                return $users;
-          } catch (PDOException $e) {
+          } catch (\PDOException $e) {
                return [];
           }
      }
 
-     public function getUserById(int $id): ?Users
+     public function getUserById(int $id): ?\UtilisateursModel
      {
           try {
                $query = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE id_utilisateur = :id_utilisateur");
-               $query->execute(['id' => $id]);
-               $data = $query->fetch(PDO::FETCH_ASSOC);
+               $query->execute(['id_utilisateur' => $id]);
+               $data = $query->fetch(\PDO::FETCH_ASSOC);
 
-               return $data ? new Users($data) : null;
-          } catch (PDOException $e) {
+               return $data ? new \UtilisateursModel($data) : null;
+          } catch (\PDOException $e) {
                return null;
           }
      }
 
-     public function inscription(Users $user): bool
+     public function getUserByEmail(string $email): ?\UtilisateursModel
      {
-          try {
-               $checkReq = $this->bdd->prepare('SELECT id_utilisateur FROM utilisateurs WHERE email = :email');
-               $checkReq->execute(['email' => $user->getEmail()]);
-
-               if ($checkReq->rowCount() > 0) {
-                    return false;
-               }
-
-               $req = $this->bdd->prepare(
-                    'INSERT INTO utilisateurs (prenom, nom, telephone, email, mot_de_passe, date_naissance, ville_residence) 
-                     VALUES (:prenom, :nom, :telephone, :email, :mot_de_passe, :date_naissance, :ville_residence)'
-               );
-
-               return $req->execute([
-                    'prenom' => $user->getPrenom(),
-                    'nom' => $user->getNom(),
-                    'telephone' => $user->getTelephone(),
-                    'email' => $user->getEmail(),
-                    'mot_de_passe' => password_hash($user->getMotDePasse(), PASSWORD_BCRYPT),
-                    'date_naissance' => $user->getDateNaissance(),
-                    'ville_residence' => $user->getVilleResidence()
-               ]);
-          } catch (PDOException $e) {
-               return false;
-          }
+          $query = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE email = :email");
+          $query->execute(['email' => $email]);
+          $data = $query->fetch(\PDO::FETCH_ASSOC);
+          return $data ? new \UtilisateursModel($data) : null;
      }
 
-     public function connexion($email, $password): ?Users
+     public function ajouterUtilisateur(\UtilisateursModel $utilisateur): void
+     {
+          $query = $this->bdd->prepare("INSERT INTO utilisateurs (nom, prenom, telephone, email, mot_de_passe, date_naissance, ville_residence) 
+                                VALUES (:nom, :prenom, :telephone, :email, :mot_de_passe, :date_naissance, :ville_residence)");
+
+          $query->execute([
+               'nom' => $utilisateur->getNom(),
+               'prenom' => $utilisateur->getPrenom(),
+               'telephone' => $utilisateur->getTelephone(),
+               'email' => $utilisateur->getEmail(),
+               'mot_de_passe' => $utilisateur->getMotDePasse(),
+               'date_naissance' => $utilisateur->getDateNaissance(),
+               'ville_residence' => $utilisateur->getVilleResidence()
+          ]);
+     }
+
+     public function connexion($email, $password): ?\UtilisateursModel
      {
           try {
                $sql = "SELECT * FROM utilisateurs WHERE email = :email";
                $stmt = $this->bdd->prepare($sql);
                $stmt->execute(['email' => $email]);
-               $user = $stmt->fetch(PDO::FETCH_ASSOC);
-               if (!empty($user) && password_verify($password, $user['mot_de_passe'])) {
-                    $obj = new Users($user);
-                    return $obj;
+               $data = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+               if (!empty($data) && password_verify($password, $data['mot_de_passe'])) {
+                    return new \UtilisateursModel($data);
                }
 
                return null;
-          } catch (PDOException $e) {
+          } catch (\PDOException $e) {
                error_log("Erreur PDO : " . $e->getMessage());
                return null;
           }
      }
 
-     public function updateUser(Users $user): bool
+     public function updateUser(\UtilisateursModel $user): bool
      {
           try {
                $req = $this->bdd->prepare(
                     'UPDATE utilisateurs 
-                     SET prenom = :prenom, nom = :nom, telephone = :telephone, email = :email, mot_de_passe = :mot_de_passe, date_naissance = :date_naissance, ville_residence = :ville_residence
-                     WHERE id_utilisateur = :id_utilisateur'
+                 SET prenom = :prenom, nom = :nom, telephone = :telephone, email = :email, mot_de_passe = :mot_de_passe, date_naissance = :date_naissance, ville_residence = :ville_residence
+                 WHERE id_utilisateur = :id_utilisateur'
                );
 
                return $req->execute([
-                    'id_user' => $user->getIdUser(),
+                    'id_utilisateur' => $user->getIdUser(),
                     'prenom' => $user->getPrenom(),
                     'nom' => $user->getNom(),
                     'telephone' => $user->getTelephone(),
@@ -107,7 +106,7 @@ class UtilisateursRepository
                     'date_naissance' => $user->getDateNaissance(),
                     'ville_residence' => $user->getVilleResidence()
                ]);
-          } catch (PDOException $e) {
+          } catch (\PDOException $e) {
                return false;
           }
      }
@@ -116,17 +115,16 @@ class UtilisateursRepository
      {
           try {
                $checkReq = $this->bdd->prepare('SELECT id_utilisateur FROM utilisateurs WHERE id_utilisateur = :id_utilisateur');
-               $checkReq->execute(['id' => $id]);
+               $checkReq->execute(['id_utilisateur' => $id]);
 
                if ($checkReq->rowCount() == 0) {
                     return false;
                }
 
                $req = $this->bdd->prepare('DELETE FROM utilisateurs WHERE id_utilisateur = :id_utilisateur');
-               return $req->execute(['id' => $id]);
-          } catch (PDOException $e) {
+               return $req->execute(['id_utilisateur' => $id]);
+          } catch (\PDOException $e) {
                return false;
           }
      }
 }
-

@@ -1,3 +1,4 @@
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -26,9 +27,13 @@
           <li><a href="aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
      </ul>
 
-     <div class=" col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Basic example">
-          <a type="button" href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
-          <a type="button" href="inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
+          <?php if (isset($_SESSION['utilisateur'])): ?>
+               <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
+          <?php else: ?>
+               <a href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
+               <a href="inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+          <?php endif; ?>
      </div>
 </header>
 

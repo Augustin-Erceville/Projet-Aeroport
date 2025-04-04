@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -26,9 +27,13 @@
           <li><a href="aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
      </ul>
 
-     <div class=" col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Basic example">
-          <a type="button" href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
-          <a type="button" href="inscription.php" class="btn btn-outline-primary active">INSCRIPTION</a>
+     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
+          <?php if (isset($_SESSION['utilisateur'])): ?>
+               <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
+          <?php else: ?>
+               <a href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
+               <a href="inscription.php" class="btn btn-outline-primary active">INSCRIPTION</a>
+          <?php endif; ?>
      </div>
 </header>
 
@@ -37,7 +42,20 @@
      </div>
      <div class="col">
           <h4 class="text-center">INSCRIPTION</h4>
-          <form action="#" method="post" class="align-self-center">
+          <?php if (isset($_SESSION['error'])): ?>
+               <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+          <?php endif; ?>
+
+          <?php if (isset($_SESSION['success'])): ?>
+               <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+               </div>
+          <?php endif; ?>
+          <form action="../source/treatment/inscription.php" method="post" class="align-self-center">
                <div class="form-floating my-2">
                     <input type="text" name="prenom" class="form-control" id="floatingPrenom" placeholder="Prénom" required>
                     <label for="floatingPrenom">Prénom</label>
@@ -59,16 +77,20 @@
                     <label for="floatingMdp">Mot de passe</label>
                </div>
                <div class="form-floating my-2">
+                    <input type="password" name="confirmation_mot_de_passe" class="form-control" id="floatingMdpConfirm" placeholder="Confirmation du mot de passe" required>
+                    <label for="floatingMdpConfirm">Confirmation du mot de passe</label>
+               </div>
+               <div class="form-floating my-2">
                     <input type="date" name="date_naissance" class="form-control" id="floatingNaissance" placeholder="Date de naissance" required>
                     <label for="floatingNaissance">Date de naissance</label>
                </div>
                <div class="form-floating my-2">
-                    <input type="text" name="adresse" class="form-control" id="adresse" list="suggestions" placeholder="Adresse" required>
-                    <label for="adresse">Adresse</label>
+                    <input type="text" name="ville_residence" class="form-control" id="adresse" list="suggestions" placeholder="Adresse" required>
+                    <label for="adresse">Ville - Pays</label>
                     <datalist id="suggestions"></datalist>
                </div>
                <div class="d-grid gap-2">
-                    <button class="btn btn-outline-success" type="button">S'INSCRIRE</button>
+                    <button class="btn btn-outline-success" type="submit">S'INSCRIRE</button>
                     <a class="btn btn-outline-secondary" href="connexion.php" type="button">SE CONNECTER</a>
                </div>
           </form>

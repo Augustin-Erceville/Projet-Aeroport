@@ -113,7 +113,12 @@ class UtilisateursModel
 
      public function setInscription($inscription)
      {
-          $this->inscription = $inscription;
+          if (is_string($inscription)) {
+               $this->inscription = new DateTime($inscription);
+          } elseif ($inscription instanceof DateTime) {
+               $this->inscription = $inscription;
+          } else {
+               $this->inscription = null;
+          }
      }
 }
-?>
