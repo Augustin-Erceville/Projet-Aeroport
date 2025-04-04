@@ -1,4 +1,13 @@
-<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+<?php
+session_start();
+
+if (!isset($_SESSION['utilisateur'])) {
+     header('Location: connexion.php');
+     exit();
+}
+
+$prenom = htmlspecialchars($_SESSION['utilisateur']['prenom']);
+?>
 <!doctype html>
 <html lang="fr">
 <head>
