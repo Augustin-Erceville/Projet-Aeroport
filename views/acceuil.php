@@ -4,7 +4,7 @@
 <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>AEROPORTAL - ACCEUIL</title>
+     <title>AEROPORTAL - ACCUEIL</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -18,7 +18,7 @@
           </a>
      </div>
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acceuil</button></a></li>
+          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Accueil</button></a></li>
           <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
           <li><a href="enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Enregistrement</button></a></li>
           <li><a href="reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>

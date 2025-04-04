@@ -4,7 +4,7 @@
 <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>AEROPORTAL - ACCEUIL</title>
+     <title>AEROPORTAL - ENREGISTREMENT</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -19,7 +19,7 @@
      </div>
 
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acceuil</button></a></li>
+          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Accueil</button></a></li>
           <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
           <li><a href="enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Enregistrement</button></a></li>
           <li><a href="reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>
@@ -52,9 +52,7 @@
                               </svg>
                               En ligne</h5>
                          <p><strong>Pour l'enregistrement en ligne, vous avez le choix</strong></p>
-                         <p>Dès 30 heures avant le départ de votre vol, gagnez du temps avec l'enregistrement en ligne : vous choisissez votre siège et obtenez votre carte d'embarquement. Elle vous est nécessaire pour monter dans l'avion.
-                         </p>
-                         <a href="#" class="stretched-link">Go somewhere</a>
+                         <p>Dès 30 heures avant le départ de votre vol, gagnez du temps avec l'enregistrement en ligne : vous choisissez votre siège et obtenez votre carte d'embarquement. Elle vous est nécessaire pour monter dans l'avion.</p>
                     </div>
                </div>
           </div>
@@ -71,7 +69,7 @@
                               Sur place</h5>
                          <p><strong>Les bornes Air France sont là pour vous 24h/24 !</strong></p>
                          <p>Vous enregistrer à l’aéroport le jour de votre vol, c’est possible jusqu’à l’heure de fin d’enregistrement : choisissez votre siège et obtenez votre carte d'embarquement. Elle est nécessaire pour monter dans l'avion.</p>
-                         <a href="#" class="stretched-link">Go somewhere</a>
+
                     </div>
                </div>
           </div>
