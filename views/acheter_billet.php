@@ -18,8 +18,8 @@
      </div>
 
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acceuil</button></a></li>
-          <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
+          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acceuil</button></a></li>
+          <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acheter un billet</button></a></li>
           <li><a href="enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Enregistrement</button></a></li>
           <li><a href="reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>
           <li><a href="information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
