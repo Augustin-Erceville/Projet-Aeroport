@@ -16,15 +16,14 @@
           </a>
      </div>
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acceuil</button></a></li>
-          <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
-          <li><a href="enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Enregistrement</button></a></li>
-          <li><a href="reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>
-          <li><a href="information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
-          <li><a href="aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
-          <?php if (isset($_SESSION['utilisateur'])): ?>
-               <li><a href="administration.php" class="nav-link px-2"><button type="button" class="btn btn-outline-warning">Administration</button></a></li>
-          <?php endif; ?>
+          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-primary">Acceuil</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion avions</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion compagnies</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion pilotes</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion reservations</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
+          <li><a href="#" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion vols</button></a></li>
      </ul>
 
      <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
