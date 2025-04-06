@@ -8,7 +8,7 @@ class VolsRepository {
      }
 
      public function createVol(VolModel $vol) {
-          $query = "INSERT INTO vols (numero_vol, compagnie_id, avion_id, pilote_id, date_depart, date_arrivee, statut) 
+          $query = "INSERT INTO vols (numero_vol, ref_compagnie, ref_avion, date_depart, date_arrivee, statut) 
                   VALUES (:numero_vol, :compagnie_id, :avion_id, :pilote_id, :date_depart, :date_arrivee, :statut)";
           $stmt = $this->pdo->prepare($query);
           $stmt->execute([
@@ -46,7 +46,7 @@ class VolsRepository {
      }
 
      public function getVolById($id) {
-          $query = "SELECT * FROM vols WHERE id = :id";
+          $query = "SELECT * FROM vols WHERE id_vol = :id";
           $stmt = $this->pdo->prepare($query);
           $stmt->execute([':id' => $id]);
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -70,7 +70,7 @@ class VolsRepository {
           $query = "UPDATE vols 
                   SET numero_vol = :numero_vol, compagnie_id = :compagnie_id, avion_id = :avion_id, 
                       pilote_id = :pilote_id, date_depart = :date_depart, date_arrivee = :date_arrivee, statut = :statut 
-                  WHERE id = :id";
+                  WHERE id_vol = :id";
           $stmt = $this->pdo->prepare($query);
           $stmt->execute([
                ':numero_vol' => $vol->getNumeroVol(),
@@ -85,7 +85,7 @@ class VolsRepository {
      }
 
      public function deleteVol($id) {
-          $query = "DELETE FROM vols WHERE id = :id";
+          $query = "DELETE FROM vols WHERE id_vol = :id";
           $stmt = $this->pdo->prepare($query);
           $stmt->execute([':id' => $id]);
      }
