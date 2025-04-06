@@ -2,26 +2,26 @@
      <p class="col-md-4 mb-0 ps-5 text-light">&copy; 2025 AERO PORTAL</p>
 
      <a href="acceuil.php" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFFFFF" class="bi bi-send-fill" viewBox="0 0 16 16">
-               <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFFFFF" class="bi bi-house" viewBox="0 0 16 16">
+               <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
           </svg>
      </a>
 
      <ul class="nav col-md-4 justify-content-end align-items-center">
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <li class="nav-item d-flex align-items-center me-3">
-                    <div class="spinner-grow text-success me-3" style="width: 2rem; height: 2rem;" role="status">
-                         <span class="visually-hidden">Loading...</span>
-                    </div>
-
                     <span class="text-light">Connecté : <?= htmlspecialchars($_SESSION['utilisateur']['prenom']) ?></span>
+                    <div class="spinner-grow text-success ms-3" style="width: 2rem; height: 2rem;" role="status">
+                         <span class="visually-hidden"></span>
+                    </div>
+               </li>
+          <?php else: ?>
+               <li class="nav-item d-flex align-items-center me-3">
+                    <div class="spinner-grow text-danger ms-3" style="width: 2rem; height: 2rem;" role="status">
+                         <span class="visually-hidden"></span>
+                    </div>
                </li>
           <?php endif; ?>
-          <li class="nav-item"><a href="acceuil.php" class="nav-link px-2 text-light">Acceuil</a></li>
-          <li class="nav-item"><a href="acheter_billet.php" class="nav-link px-2 text-light">Réserver</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-light">CGU</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-light">CGV</a></li>
-          <li class="nav-item"><a href="#" class="nav-link px-2 text-light">A propos</a></li>
      </ul>
 </footer>
 

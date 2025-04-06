@@ -34,4 +34,9 @@
           <?php endif; ?>
      </div>
 </header>
+<div class="mx-4">
+     <div class="row">
+          <h4 class="text-center text-uppercase">Où souhaitez-vous aller ?</h4>
+     </div>
+</div>
 <?php include 'footer.php'; ?>
