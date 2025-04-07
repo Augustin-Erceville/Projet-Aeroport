@@ -1,7 +1,7 @@
 <?php
 class UtilisateursModel
 {
-     private ?int $id_user = null;
+     private ?int $id_utilisateur = null;
      private ?string $prenom = null;
      private ?string $nom = null;
      private ?string $telephone = null;
@@ -16,24 +16,44 @@ class UtilisateursModel
           $this->hydrate($donnees);
      }
 
-     private function hydrate(array $donnees): void
-     {
-          foreach ($donnees as $key => $value) {
-               $method = 'set' . ucfirst($key);
-               if (method_exists($this, $method)) {
-                    $this->$method($value);
-               }
+     public function hydrate($data) {
+          if (isset($data['id_utilisateur'])) {
+               $this->id_utilisateur = $data['id_utilisateur'];
+          }
+          if (isset($data['prenom'])) {
+               $this->prenom = $data['prenom'];
+          }
+          if (isset($data['nom'])) {
+               $this->nom = $data['nom'];
+          }
+          if (isset($data['telephone'])) {
+               $this->telephone = $data['telephone'];
+          }
+          if (isset($data['email'])) {
+               $this->email = $data['email'];
+          }
+          if (isset($data['mot_de_passe'])) {
+               $this->mot_de_passe = $data['mot_de_passe'];
+          }
+          if (isset($data['date_naissance'])) {
+               $this->date_naissance = $data['date_naissance'];
+          }
+          if (isset($data['ville_residence'])) {
+               $this->ville_residence = $data['ville_residence'];
+          }
+          if (isset($data['inscription'])) {
+               $this->inscription = new DateTime($data['inscription']);
           }
      }
 
      public function getIdUser()
      {
-          return $this->id_user;
+          return $this->id_utilisateur;
      }
 
-     public function setIdUser($id_user)
+     public function setIdUser($id_utilisateur)
      {
-          $this->id_user = $id_user;
+          $this->id_utilisateur = $id_utilisateur;
      }
 
      public function getPrenom()

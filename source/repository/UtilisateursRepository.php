@@ -15,8 +15,7 @@ class UtilisateursRepository
           $this->bdd->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
      }
 
-     public function getUsers(): array
-     {
+     public function getUsers(): array {
           try {
                $query = $this->bdd->prepare("SELECT * FROM utilisateurs");
                $query->execute();

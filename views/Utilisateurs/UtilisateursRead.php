@@ -9,14 +9,14 @@ $bdd = $config->connexion();
 $utilisateurRepo = new repository\UtilisateursRepository($bdd);
 $utilisateurs = $utilisateurRepo->getUsers();
 ?>
-     <!doctype html>
-     <html lang="fr">
-     <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1">
-          <title>AEROPORTAL - ACCEUIL</title>
-          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-     </head>
+<!doctype html>
+<html lang="fr">
+<head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <title>AEROPORTAL - ACCEUIL</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
      <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
@@ -50,8 +50,9 @@ $utilisateurs = $utilisateurRepo->getUsers();
           <h4 class="text-center text-uppercase">Administration de Aeroportal</h4>
      </div>
 </div>
-<div class="mt-5">
-     <table class=" container table table-striped">
+<div class="row mt-5">
+     <div class="col-1"></div>
+     <table class="col table table-striped">
           <thead>
           <tr>
                <th>ID</th>
@@ -77,12 +78,13 @@ $utilisateurs = $utilisateurRepo->getUsers();
                     <td><?= htmlspecialchars($user->getVilleResidence() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
                     <td><?= htmlspecialchars($user->getInscription()->format('Y-m-d') ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
                     <td>
-                         <a href="UtilisateursUpdate.php?id=<?= $user->getIdUser() ?>" class="btn btn-warning btn-sm">Modifier</a>
-                         <a href="UtilisateursDelete.php?id=<?= $user->getIdUser() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                         <a href="UtilisateursUpdate.php?id=<?= $user->getIdUser() ?>" class="btn btn-warning btn-sm">✒️</a>
+                         <a href="UtilisateursDelete.php?id=<?= $user->getIdUser() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">🗑️</a>
                     </td>
                </tr>
           <?php endforeach; ?>
           </tbody>
      </table>
+     <div class="col-1"></div>
 </div>
 <?php include '../Footer.php'; ?>
