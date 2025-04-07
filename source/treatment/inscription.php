@@ -25,37 +25,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           empty($telephone) || empty($date_naissance) || empty($ville_residence)
      ) {
           $_SESSION['error'] = "Tous les champs doivent être remplis.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
      if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
           $_SESSION['error'] = "Email invalide.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
      if (!preg_match('/^[0-9]{10}$/', $telephone)) {
           $_SESSION['error'] = "Numéro de téléphone invalide.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
      if (!DateTime::createFromFormat('Y-m-d', $date_naissance)) {
           $_SESSION['error'] = "Date de naissance invalide.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
      if (strlen($mdp) < 8) {
           $_SESSION['error'] = "Le mot de passe doit contenir au moins 8 caractères.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
      if ($mdp !== $mdp_confirm) {
           $_SESSION['error'] = "Les mots de passe ne correspondent pas.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
      if ($repo->getUserByEmail($email)) {
           $_SESSION['error'] = "Un utilisateur avec cet email existe déjà.";
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 
@@ -85,11 +85,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           $repo->ajouterUtilisateur($utilisateur);
 
           $_SESSION['success'] = "Inscription réussie !";
-          header("Location: ../../views/connexion.php");
+          header("Location: ../../views/Connexion.php");
           exit();
      } catch (PDOException $e) {
           $_SESSION['error'] = "Erreur lors de l'insertion : " . $e->getMessage();
-          header("Location: ../../views/inscription.php");
+          header("Location: ../../views/Inscription.php");
           exit();
      }
 }

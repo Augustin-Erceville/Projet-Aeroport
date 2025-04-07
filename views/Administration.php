@@ -10,13 +10,13 @@
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
      <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
-          <a href="acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <a href="Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
                <img src="../documentation/img/Logo.png" style="max-width: 15%; height: auto;">
                <div class="fs-4 text-light">AEROPORTAL</div>
           </a>
      </div>
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-primary">Acceuil</button></a></li>
+          <li><a href="Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-primary">Acceuil</button></a></li>
           <li><a href="Avions/AvionsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion avions</button></a></li>
           <li><a href="Compagnies/CompagniesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion compagnies</button></a></li>
           <li><a href="Conges/CongesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>
@@ -30,8 +30,8 @@
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
           <?php else: ?>
-               <a href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
-               <a href="inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+               <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
+               <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
           <?php endif; ?>
      </div>
 </header>
@@ -40,4 +40,4 @@
           <h4 class="text-center text-uppercase">Administration de Aeroportal</h4>
      </div>
 </div>
-<?php include 'footer.php'; ?>
+<?php include 'Footer.php'; ?>

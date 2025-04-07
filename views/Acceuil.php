@@ -10,20 +10,20 @@
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
      <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
-          <a href="acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <a href="Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
                <img src="../documentation/img/Logo.png" style="max-width: 15%; height: auto;">
                <div class="fs-4 text-light">AEROPORTAL</div>
           </a>
      </div>
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acceuil</button></a></li>
-          <li><a href="acheter_billet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
-          <li><a href="enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Enregistrement</button></a></li>
-          <li><a href="reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>
-          <li><a href="information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
-          <li><a href="aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
+          <li><a href="Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Acceuil</button></a></li>
+          <li><a href="AcheterBillet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
+          <li><a href="Enregistrement.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Enregistrement</button></a></li>
+          <li><a href="Reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes reservations</button></a></li>
+          <li><a href="Information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
+          <li><a href="Aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
           <?php if (isset($_SESSION['utilisateur'])): ?>
-               <li><a href="administration.php" class="nav-link px-2"><button type="button" class="btn btn-outline-warning">Administration</button></a></li>
+               <li><a href="Administration.php" class="nav-link px-2"><button type="button" class="btn btn-outline-warning">Administration</button></a></li>
           <?php endif; ?>
      </ul>
 
@@ -31,8 +31,8 @@
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
           <?php else: ?>
-               <a href="connexion.php" class="btn btn-outline-success">CONNEXION</a>
-               <a href="inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+               <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
+               <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
           <?php endif; ?>
      </div>
 </header>
@@ -41,4 +41,4 @@
           <h1 class="text-center text-uppercase">Bienvenue chez Aeroportal</h1>
      </div>
 </div>
-<?php include 'footer.php'; ?>
+<?php include 'Footer.php'; ?>

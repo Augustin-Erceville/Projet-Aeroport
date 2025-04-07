@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
      if (empty($email) || empty($password)) {
           $_SESSION['error'] = "Veuillez remplir tous les champs.";
-          header("Location: ../../views/connexion.php");
+          header("Location: ../../views/Connexion.php");
           exit();
      }
 
@@ -35,12 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                'email' => $user->getEmail()
           ];
           $_SESSION['success'] = "Connexion réussie. Bienvenue " . $user->getPrenom() . " !";
-          header("Location: ../../views/acceuil.php");
+          header("Location: ../../views/Acceuil.php");
           exit();
      } else {
           // Échec de connexion
           $_SESSION['error'] = "Email ou mot de passe incorrect.";
-          header("Location: ../../views/connexion.php");
+          header("Location: ../../views/Connexion.php");
           exit();
      }
 }
