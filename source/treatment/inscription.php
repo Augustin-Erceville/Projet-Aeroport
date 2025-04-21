@@ -72,13 +72,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
      $hash = password_hash($mdp, PASSWORD_DEFAULT);
 
      $utilisateur = new UtilisateursModel([
-          'nom' => $nom,
-          'prenom' => $prenom,
-          'email' => $email,
-          'telephone' => $telephone,
-          'dateNaissance' => $date_naissance,
-          'villeResidence' => $ville_residence,
-          'motDePasse' => $hash
+          'nom' => $_POST['nom'],
+          'prenom' => $_POST['prenom'],
+          'telephone' => $_POST['telephone'],
+          'email' => $_POST['email'],
+          'mot_de_passe' => password_hash($_POST['mot_de_passe'], PASSWORD_BCRYPT),
+          'date_naissance' => $_POST['date_naissance'],
+          'ville_residence' => $_POST['ville_residence'],
      ]);
 
      try {
