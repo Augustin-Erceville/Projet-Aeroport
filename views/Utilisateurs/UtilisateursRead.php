@@ -46,13 +46,14 @@ $utilisateurs = $utilisateurRepo->getUsers();
      </div>
 </header>
 <div class="mx-4">
-     <div class="row">
-          <h4 class="text-center text-uppercase">Liste des utilisateurs</h4>
-     </div>
+    <div class="row">
+        <h4 class="text-center text-uppercase">Liste des utilisateurs</h4>
+        <a href="UtilisateursCreate.php" class="btn btn-outline-success text-uppercase disabled">Ajouter un utilisateur</a>
+    </div>
 </div>
-<div class="row mt-5">
-     <div class="col-1"></div>
-     <table class="col table table-striped">
+<div class="row my-3">
+    <div class="col-1"></div>
+    <table class="col table table-striped">
           <thead>
           <tr>
                <th>ID</th>

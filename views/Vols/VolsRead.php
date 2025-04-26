@@ -47,9 +47,10 @@ $vols = $volsRepo->getVols();
 <div class="mx-4">
     <div class="row">
         <h4 class="text-center text-uppercase">Liste des vols</h4>
+        <a href="UtilisateursCreate.php" class="btn btn-outline-success text-uppercase">Ajouter un vol</a>
     </div>
 </div>
-<div class="row mt-5">
+<div class="row my-3">
     <div class="col-1"></div>
     <table class="col table table-striped">
         <thead>

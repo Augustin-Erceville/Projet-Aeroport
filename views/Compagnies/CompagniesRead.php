@@ -51,7 +51,7 @@ $compagnies = $compagnieRepo->getCompagnies();
         <a href="CompagniesCreate.php" class="btn btn-outline-success text-uppercase">Ajouter une compagnie</a>
     </div>
 </div>
-<div class="row mt-5">
+<div class="row my-3">
     <div class="col-1"></div>
     <table class="col table table-striped">
         <thead>
