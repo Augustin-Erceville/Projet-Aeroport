@@ -65,7 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </div>
     <ul class="nav col mb-2 justify-content-center mb-md-0">
-        <!-- navigation -->
+        <li><a href="../Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-info">Acceuil</button></a></li>
+        <li><a href="../Avions/AvionsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion avions</button></a></li>
+        <li><a href="../Compagnies/CompagniesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Gestion compagnies</button></a></li>
+        <li><a href="../Conges/CongesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>
+        <li><a href="../Pilotes/PilotesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion pilotes</button></a></li>
+        <li><a href="../Reservations/ReservationsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion réservations</button></a></li>
+        <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
+        <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion vols</button></a></li>
     </ul>
     <div class="col-2 btn-group md-3 me-3 text-end">
         <?php if (isset($_SESSION['utilisateur'])): ?>
@@ -76,28 +83,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php endif; ?>
     </div>
 </header>
-
 <div class="container mt-5">
-    <h3 class="mb-4">Créer une nouvelle compagnie</h3>
+    <h3 class="mb-4">Ajouter une nouvelle compagnie</h3>
 
     <?php if ($message): ?>
         <div class="alert alert-danger"><?= htmlspecialchars($message) ?></div>
     <?php endif; ?>
 
     <form method="post" class="row g-3">
-        <div class="col-md-6">
             <label for="nom" class="form-label">Nom de la compagnie</label>
             <input type="text" id="nom" name="nom" class="form-control" required value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>">
-        </div>
-        <div class="col-md-6">
             <label for="pays" class="form-label">Pays d'origine</label>
             <select id="pays" name="pays" class="form-select" required>
                 <option value="">Chargement...</option>
             </select>
-        </div>
         <div class="col-12">
-            <button type="submit" class="btn btn-primary">Créer la compagnie</button>
-            <a href="CompagniesRead.php" class="btn btn-secondary ms-2">Annuler</a>
+            <button type="submit" class="btn btn-primary">Ajouter la compagnie</button>
         </div>
     </form>
 </div>
