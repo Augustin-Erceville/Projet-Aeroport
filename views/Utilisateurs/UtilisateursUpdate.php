@@ -89,32 +89,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <label for="prenom">Prénom</label>
             <input type="text" class="form-control" id="prenom" name="prenom" value="<?php echo htmlspecialchars($user->getPrenom()); ?>" required>
         </div>
-
         <div class="form-group">
             <label for="nom">Nom</label>
             <input type="text" class="form-control" id="nom" name="nom" value="<?php echo htmlspecialchars($user->getNom()); ?>" required>
         </div>
-
         <div class="form-group">
             <label for="telephone">Téléphone</label>
             <input type="text" class="form-control" id="telephone" name="telephone" value="<?php echo htmlspecialchars($user->getTelephone()); ?>" required>
         </div>
-
         <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" value="<?php echo htmlspecialchars($user->getEmail()); ?>" required>
         </div>
-
         <div class="form-group">
             <label for="date_naissance">Date de naissance</label>
             <input type="date" class="form-control" id="date_naissance" name="date_naissance" value="<?php echo htmlspecialchars($user->getDateNaissance()); ?>" required>
         </div>
-
         <div class="form-group">
             <label for="ville_residence">Ville de résidence</label>
             <input type="text" class="form-control" id="ville_residence" name="ville_residence" value="<?php echo htmlspecialchars($user->getVilleResidence()); ?>" required>
         </div>
-
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </form>
 </div>
