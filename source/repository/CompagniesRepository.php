@@ -19,17 +19,19 @@ class CompagniesRepository {
           return $compagnie;
      }
 
-     public function getCompagnie($nom) {
-          $query = "SELECT * FROM compagnies WHERE nom = :nom";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':nom' => $nom]);
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function getCompagnies() {
+        $query = "SELECT * FROM compagnies";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute();
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-          if ($row) {
-               return new CompagnieModel($row['id'], $row['nom'], $row['pays'], $row['date_creation']);
-          }
-          return null;
-     }
+        $compagnies = [];
+        foreach ($rows as $row) {
+            $compagnies[] = new CompagnieModel($row['id'], $row['nom'], $row['pays'], $row['date_creation']);
+        }
+
+        return $compagnies;
+    }
 
      public function getCompagnieById($id) {
           $query = "SELECT * FROM compagnies WHERE id = :id";

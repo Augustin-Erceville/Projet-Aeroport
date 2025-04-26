@@ -16,7 +16,7 @@
           </a>
      </div>
      <ul class="nav col mb-2 justify-content-center mb-md-0">
-          <li><a href="Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-primary">Acceuil</button></a></li>
+          <li><a href="Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-info">Acceuil</button></a></li>
           <li><a href="Avions/AvionsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion avions</button></a></li>
           <li><a href="Compagnies/CompagniesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion compagnies</button></a></li>
           <li><a href="Conges/CongesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>

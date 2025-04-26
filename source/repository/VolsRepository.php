@@ -24,26 +24,26 @@ class VolsRepository {
           return $vol;
      }
 
-     public function getVol($numeroVol) {
-          $query = "SELECT * FROM vols WHERE numero_vol = :numero_vol";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':numero_vol' => $numeroVol]);
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function getVols() {
+        $query = "SELECT * FROM vols";
+        $stmt = $this->pdo->query($query);
+        $vols = [];
 
-          if ($row) {
-               return new VolModel(
-                    $row['id'],
-                    $row['numero_vol'],
-                    $row['compagnie_id'],
-                    $row['avion_id'],
-                    $row['pilote_id'],
-                    $row['date_depart'],
-                    $row['date_arrivee'],
-                    $row['statut']
-               );
-          }
-          return null;
-     }
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $vols[] = new VolModel(
+                $row['id_vol'],
+                $row['numero_vol'],
+                $row['compagnie_id'],
+                $row['avion_id'],
+                $row['pilote_id'],
+                $row['date_depart'],
+                $row['date_arrivee'],
+                $row['statut']
+            );
+        }
+
+        return $vols;
+    }
 
      public function getVolById($id) {
           $query = "SELECT * FROM vols WHERE id_vol = :id";
