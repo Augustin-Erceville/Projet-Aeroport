@@ -18,10 +18,7 @@ try {
      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           $avion = new AvionModel();
           $avion->hydrate($row);
-
           $compagnie = $compagnieRepo->getCompagnieById($avion->getRefCompagnie());
-          $avion->setRefCompagnie($compagnie ? $compagnie->getNom() : 'Aucune compagnie');
-
           $avions[] = $avion;
      }
 } catch (PDOException $e) {
