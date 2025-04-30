@@ -1,12 +1,31 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Hôte : 127.0.0.1:3306
+-- Généré le : mer. 30 avr. 2025 à 06:46
+-- Version du serveur : 8.3.0
+-- Version de PHP : 8.2.18
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Base de données : `projets_airport`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `avions`
+--
 
 DROP TABLE IF EXISTS `avions`;
 CREATE TABLE IF NOT EXISTS `avions` (
@@ -19,13 +38,33 @@ CREATE TABLE IF NOT EXISTS `avions` (
                                         KEY `id_compagnie` (`ref_compagnie`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `compagnies`
+--
+
 DROP TABLE IF EXISTS `compagnies`;
 CREATE TABLE IF NOT EXISTS `compagnies` (
                                             `id_compagnie` int NOT NULL AUTO_INCREMENT COMMENT 'Identifiant unique de la compagnie',
                                             `nom` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Nom de la compagnie',
                                             `pays` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'Pays d''origine de la compagnie',
                                             PRIMARY KEY (`id_compagnie`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `compagnies`
+--
+
+INSERT INTO `compagnies` (`id_compagnie`, `nom`, `pays`) VALUES
+                                                             (1, 'Air France', 'France'),
+                                                             (2, 'Boeing', 'États-Unis');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `conges`
+--
 
 DROP TABLE IF EXISTS `conges`;
 CREATE TABLE IF NOT EXISTS `conges` (
@@ -37,6 +76,12 @@ CREATE TABLE IF NOT EXISTS `conges` (
                                         KEY `id_pilote` (`ref_pilote`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pilotes`
+--
+
 DROP TABLE IF EXISTS `pilotes`;
 CREATE TABLE IF NOT EXISTS `pilotes` (
                                          `id_pilote` int NOT NULL AUTO_INCREMENT COMMENT 'Identifiant unique du pilote',
@@ -47,6 +92,12 @@ CREATE TABLE IF NOT EXISTS `pilotes` (
                                          UNIQUE KEY `id_utilisateur` (`ref_utilisateur`),
                                          KEY `id_avion` (`ref_avion`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `reservations`
+--
 
 DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE IF NOT EXISTS `reservations` (
@@ -61,6 +112,12 @@ CREATE TABLE IF NOT EXISTS `reservations` (
                                               KEY `id_utilisateur` (`ref_utilisateur`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `utilisateurs`
+--
+
 DROP TABLE IF EXISTS `utilisateurs`;
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
                                               `id_utilisateur` int NOT NULL AUTO_INCREMENT COMMENT 'Identifiant unique de l''utilisateur',
@@ -74,7 +131,22 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
                                               `inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date d''inscription de l''utilisateur',
                                               PRIMARY KEY (`id_utilisateur`),
                                               UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`id_utilisateur`, `prenom`, `nom`, `telephone`, `email`, `mot_de_passe`, `date_naissance`, `ville_residence`, `inscription`) VALUES
+                                                                                                                                                             (1, 'Augustin', 'd\'Erceville', '0782706356', 'a.erceville@lprs.fr', '$2y$10$pvrhL/PAgj5dTsFCr5WLb.0laQawpL4ZZlv9OFjwiCM12TroY13BW', '2000-09-22', 'Bondy (93010) - Seine-Saint-Denis', '2025-04-04 11:25:42'),
+                                                                                                                                                             (2, 'John', 'Doe', '0123456789', 'adresse@email.com', '$2y$10$N0P3BWhflqi8KM0DRiZms.GGE1LxN.HzP/H5QRL2aN4/aSAGREPyy', '2001-01-01', 'Lille (59350) - Nord', '2025-04-21 14:34:17'),
+                                                                                                                                                             (3, 'Odile', 'd\'Erceville', '0123456789', 'adresse@mail.fr', '$2y$10$ObQ7TAOQE2nUdmDib1Iu7OFEThdHAeXDcDEbEPatncWgjlkn7XYl.', '1963-06-21', 'Villemombre', '2025-04-21 14:43:25');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `vols`
+--
 
 DROP TABLE IF EXISTS `vols`;
 CREATE TABLE IF NOT EXISTS `vols` (

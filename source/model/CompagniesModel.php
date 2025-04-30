@@ -1,5 +1,5 @@
 <?php
-namespace model; // Ajoutez cette ligne pour définir le namespace
+namespace model;
 
 class CompagnieModel {
     private $id;
@@ -29,7 +29,7 @@ class CompagnieModel {
         }
     }
 
-    public function getId() {
+    public function getIdCompagnie(): ?int {
         return $this->id;
     }
 

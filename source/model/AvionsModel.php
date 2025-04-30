@@ -2,40 +2,39 @@
 
 class AvionModel
 {
-    private $id;
-    private $nom;
-    private $type;
-    private $capacite;
-    private $compagnie;
+     private $id_avion;
+     private $immatriculation;
+     private $modele;
+     private $capacite;
+     private $ref_compagnie;
 
-    public function __construct($id = null, $nom = '', $type = '', $capacite = 0, $compagnie = '')
-    {
-        $this->id = $id;
-        $this->nom = $nom;
-        $this->type = $type;
-        $this->capacite = $capacite;
-        $this->compagnie = $compagnie;
-    }
-    public function hydrate(array $data)
-    {
-        if (isset($data['id'])) $this->id = $data['id'];
-        if (isset($data['nom'])) $this->nom = $data['nom'];
-        if (isset($data['type'])) $this->type = $data['type'];
-        if (isset($data['capacite'])) $this->capacite = $data['capacite'];
-        if (isset($data['compagnie'])) $this->compagnie = $data['compagnie'];
-    }
+     public function __construct($id_avion = null, $immatriculation = '', $modele = '', $capacite = 0, $ref_compagnie = 0)
+     {
+          $this->id_avion = $id_avion;
+          $this->immatriculation = $immatriculation;
+          $this->modele = $modele;
+          $this->capacite = (int)$capacite;
+          $this->ref_compagnie = (int)$ref_compagnie;
+     }
 
-    // Getters
-    public function getId() { return $this->id; }
-    public function getNom() { return $this->nom; }
-    public function getType() { return $this->type; }
-    public function getCapacite() { return $this->capacite; }
-    public function getCompagnie() { return $this->compagnie; }
+     public function hydrate(array $data)
+     {
+          if (isset($data['id_avion'])) $this->id_avion = $data['id_avion'];
+          if (isset($data['immatriculation'])) $this->immatriculation = $data['immatriculation'];
+          if (isset($data['modele'])) $this->modele = $data['modele'];
+          if (isset($data['capacite'])) $this->capacite = (int)$data['capacite'];
+          if (isset($data['ref_compagnie'])) $this->ref_compagnie = (int)$data['ref_compagnie'];
+     }
 
-    // Setters
-    public function setId($id) { $this->id = $id; }
-    public function setNom($nom) { $this->nom = $nom; }
-    public function setType($type) { $this->type = $type; }
-    public function setCapacite($capacite) { $this->capacite = $capacite; }
-    public function setCompagnie($compagnie) { $this->compagnie = $compagnie; }
+     public function getIdAvion() { return $this->id_avion; }
+     public function getImmatriculation() { return $this->immatriculation; }
+     public function getModele() { return $this->modele; }
+     public function getCapacite() { return $this->capacite; }
+     public function getRefCompagnie() { return $this->ref_compagnie; }
+
+     public function setIdAvion($id_avion) { $this->id_avion = $id_avion; }
+     public function setImmatriculation($immatriculation) { $this->immatriculation = $immatriculation; }
+     public function setModele($modele) { $this->modele = $modele; }
+     public function setCapacite($capacite) { $this->capacite = (int)$capacite; }
+     public function setRefCompagnie($ref_compagnie) { $this->ref_compagnie = (int)$ref_compagnie; }
 }
