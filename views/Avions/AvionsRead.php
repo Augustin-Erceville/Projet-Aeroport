@@ -3,11 +3,14 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once __DIR__ . '/../../source/bdd/config.php';
 require_once __DIR__ . '/../../source/model/AvionsModel.php';
+require_once __DIR__ . '/../../source/model/CompagniesModel.php';
 require_once __DIR__ . '/../../source/repository/AvionsRepository.php';
+require_once __DIR__ . '/../../source/repository/CompagniesRepository.php';
 
 $config         = new Config();
 $bdd            = $config->connexion();
 $avionRepo      = new AvionsRepository($bdd);
+$compagnieRepo  = new CompagniesRepository($bdd);
 
 $avions = [];
 try {
@@ -15,6 +18,10 @@ try {
      while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
           $avion = new AvionModel();
           $avion->hydrate($row);
+
+          $compagnie = $compagnieRepo->getCompagnieById($avion->getRefCompagnie());
+          $avion->setRefCompagnie($compagnie ? $compagnie->getNom() : 'Aucune compagnie');
+
           $avions[] = $avion;
      }
 } catch (PDOException $e) {
@@ -43,7 +50,7 @@ try {
           <li><a href="../Compagnies/CompagniesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion compagnies</button></a></li>
           <li><a href="../Conges/CongesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>
           <li><a href="../Pilotes/PilotesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion pilotes</button></a></li>
-          <li><a href="../Reservations/ReservationsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion reservations</button></a></li>
+          <li><a href="../Reservations/ReservationsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion réservations</button></a></li>
           <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
           <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Gestion vols</button></a></li>
      </ul>
@@ -56,12 +63,14 @@ try {
           <?php endif; ?>
      </div>
 </header>
+
 <div class="mx-4">
      <div class="row">
           <h4 class="text-center text-uppercase">Liste des avions</h4>
           <a href="AvionsCreate.php" class="btn btn-outline-success text-uppercase">Ajouter un avion</a>
      </div>
 </div>
+
 <div class="row my-3">
      <div class="col-1"></div>
      <table class="col table table-striped">
@@ -71,6 +80,7 @@ try {
                <th>Immatriculation</th>
                <th>Modèle</th>
                <th>Capacité</th>
+               <th>Compagnie</th>
                <th>Actions</th>
           </tr>
           </thead>
@@ -78,19 +88,20 @@ try {
           <?php if (count($avions) > 0) : ?>
                <?php foreach ($avions as $avion) : ?>
                     <tr>
-                         <td><?= htmlspecialchars($avion->getIdAvion() ?? 'ID non défini') ?></td> <!-- Utilisation de la méthode correcte getIdAvion -->
+                         <td><?= htmlspecialchars($avion->getIdAvion() ?? 'ID non défini') ?></td>
                          <td><?= htmlspecialchars($avion->getImmatriculation() ?? 'Immatriculation non définie') ?></td>
                          <td><?= htmlspecialchars($avion->getModele() ?? 'Modèle non défini') ?></td>
                          <td><?= htmlspecialchars($avion->getCapacite() ?? 'Capacité non définie') ?></td>
+                         <td><?= htmlspecialchars($avion->getRefCompagnie() ?? 'Compagnie non définie') ?></td>
                          <td>
-                              <a href="AvionsUpdate.php?id=<?= $avion->getIdAvion() ?>">Modifier</a> |
-                              <a href="AvionsDelete.php?id=<?= $avion->getIdAvion() ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avion ?')">Supprimer</a>
+                              <a href="AvionsUpdate.php?id=<?= $avion->getIdAvion() ?>" class="btn btn-warning btn-sm">✒️</a>
+                              <a href="AvionsDelete.php?id=<?= $avion->getIdAvion() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet avion ?');">🗑️</a>
                          </td>
                     </tr>
                <?php endforeach; ?>
           <?php else : ?>
                <tr>
-                    <td colspan="5">Aucun avion trouvé.</td>
+                    <td colspan="6">Aucun avion trouvé.</td>
                </tr>
           <?php endif; ?>
           </tbody>

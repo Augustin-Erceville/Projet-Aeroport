@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../source/model/CompagniesModel.php';
 
 $config = new Config();
 $bdd = $config->connexion();
-$compagnieRepo = new repository\CompagniesRepository($bdd);
+$compagnieRepo = new CompagniesRepository($bdd);
 $compagnies = $compagnieRepo->getCompagnies();
 ?>
 <!doctype html>
@@ -65,12 +65,12 @@ $compagnies = $compagnieRepo->getCompagnies();
         <tbody>
         <?php foreach ($compagnies as $compagnie): ?>
             <tr>
-                <td><?= htmlspecialchars($compagnie->getId() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($compagnie->getIdCompagnie() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
                 <td><?= htmlspecialchars($compagnie->getNom() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
                 <td><?= htmlspecialchars($compagnie->getPays() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
                 <td>
-                    <a href="CompagniesUpdate.php?id=<?= $compagnie->getId() ?>" class="btn btn-warning btn-sm">✒️</a>
-                    <a href="CompagniesDelete.php?id=<?= $compagnie->getId() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compagnie ?');">🗑️</a>
+                    <a href="CompagniesUpdate.php?id=<?= $compagnie->getIdCompagnie() ?>" class="btn btn-warning btn-sm">✒️</a>
+                    <a href="CompagniesDelete.php?id=<?= $compagnie->getIdCompagnie() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compagnie ?');">🗑️</a>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -79,5 +79,3 @@ $compagnies = $compagnieRepo->getCompagnies();
     <div class="col-1"></div>
 </div>
 <?php include '../Footer.php'; ?>
-</body>
-</html>

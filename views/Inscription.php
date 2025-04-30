@@ -115,7 +115,7 @@
                     datalist.innerHTML = "";
                     data.forEach(commune => {
                         const option = document.createElement("option");
-                        option.value = `${commune.nom} (${commune.code}) - ${commune.departement.nom}`;
+                        option.value = `${commune.nom};
                         datalist.appendChild(option);
                     });
                 })

@@ -1,10 +1,4 @@
 <?php
-
-namespace repository;
-
-use \PDO;
-use \PDOException;
-
 class UtilisateursRepository
 {
      private \PDO $bdd;

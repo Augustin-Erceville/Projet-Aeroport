@@ -7,17 +7,15 @@ require_once __DIR__ . '/../../source/repository/CompagniesRepository.php';
 
 $config        = new Config();
 $bdd           = $config->connexion();
-$compagnieRepo = new repository\CompagniesRepository($bdd);
+$compagnieRepo = new CompagniesRepository($bdd);
 $message       = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupération et validation des données du formulaire
     $nom  = trim($_POST['nom']  ?? '');
     $pays = trim($_POST['pays'] ?? '');
 
     if ($nom !== '' && $pays !== '') {
-        // Création du modèle et insertion en base (dateCreation vide)
-        $compagnie = new \model\CompagnieModel(null, $nom, $pays, '');
+        $compagnie = new CompagnieModel(null, $nom, $pays, '');
         $compagnieRepo->createCompagnie($compagnie);
         header('Location: CompagniesRead.php?success=1');
         exit;

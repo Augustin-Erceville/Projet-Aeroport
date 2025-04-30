@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../source/model/UtilisateursModel.php';
 
 $config = new Config();
 $bdd = $config->connexion();
-$utilisateurRepo = new repository\UtilisateursRepository($bdd);
+$utilisateurRepo = new UtilisateursRepository($bdd);
 $utilisateurs = $utilisateurRepo->getUsers();
 ?>
 <!doctype html>

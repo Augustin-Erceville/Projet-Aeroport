@@ -12,7 +12,7 @@ if ($id === null) {
 
 $config = new Config();
 $bdd = $config->connexion();
-$utilisateurRepo = new repository\UtilisateursRepository($bdd);
+$utilisateurRepo = new UtilisateursRepository($bdd);
 
 if ($utilisateurRepo->deleteUser((int)$id)) {
     header('Location: UtilisateursRead.php?success=suppression');

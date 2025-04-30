@@ -12,7 +12,7 @@ if ($id === null) {
 }
 $config = new Config();
 $bdd = $config->connexion();
-$utilisateurRepo = new repository\UtilisateursRepository($bdd);
+$utilisateurRepo = new UtilisateursRepository($bdd);
 $user = $utilisateurRepo->getUserById($id);
 
 if (!$user) {

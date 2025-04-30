@@ -2,7 +2,7 @@
 if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once __DIR__ . '/../../source/bdd/config.php';
-require_once __DIR__ . '/../../source/model/AvionModel.php';
+require_once __DIR__ . '/../../source/model/AvionsModel.php';
 require_once __DIR__ . '/../../source/repository/AvionsRepository.php';
 
 $config         = new Config();

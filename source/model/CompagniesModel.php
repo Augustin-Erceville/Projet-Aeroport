@@ -1,5 +1,4 @@
 <?php
-namespace model;
 
 class CompagnieModel {
     private $id;

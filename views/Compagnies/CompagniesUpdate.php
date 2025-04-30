@@ -7,31 +7,25 @@ require_once __DIR__ . '/../../source/model/CompagniesModel.php';
 
 $config         = new Config();
 $bdd            = $config->connexion();
-$compagnieRepo  = new repository\CompagniesRepository($bdd);
+$compagnieRepo  = new CompagniesRepository($bdd);
 
-// Vérifier si l'ID est passé dans l'URL
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $id = $_GET['id'];
     $compagnie = $compagnieRepo->getCompagnieById($id);
 } else {
-    // Redirection en cas d'ID manquant ou invalide
     header("Location: CompagniesRead.php");
     exit();
 }
 
-// Traitement du formulaire de mise à jour
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nom    = $_POST['nom'];
     $pays   = $_POST['pays'];
 
-    // Validation des données reçues
     if (!empty($nom) && !empty($pays)) {
-        // Mise à jour dans la base de données
         $compagnie->setNom($nom);
         $compagnie->setPays($pays);
         $compagnieRepo->updateCompagnie($compagnie);
 
-        // Redirection après la mise à jour
         header("Location: CompagniesRead.php");
         exit();
     } else {
@@ -86,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="alert alert-danger"><?= htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8') ?></div>
     <?php endif; ?>
 
-    <form method="POST" action="CompagniesUpdate.php?id=<?= $compagnie->getId() ?>">
+    <form method="POST" action="CompagniesUpdate.php?id=<?= $compagnie->getIdCompagnie() ?>">
         <div class="mb-3">
             <label for="nom" class="form-label">Nom de la compagnie</label>
             <input type="text" class="form-control" id="nom" name="nom" value="<?= htmlspecialchars($compagnie->getNom(), ENT_QUOTES, 'UTF-8') ?>" required>
@@ -98,5 +92,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
     </form>
 </div>
-</body>
-</html>
+<?php include '../Footer.php'; ?>

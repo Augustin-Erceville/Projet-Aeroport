@@ -1,8 +1,4 @@
 <?php
-namespace repository;
-
-use PDO;
-use model\CompagnieModel;
 
 class CompagniesRepository {
      private PDO $pdo;
@@ -36,7 +32,6 @@ class CompagniesRepository {
                     'id' => $row['id_compagnie'],
                     'nom' => $row['nom'],
                     'pays' => $row['pays'],
-                    //'dateCreation' => '',
                ]);
                $result[] = $compagnie;
           }
@@ -69,7 +64,7 @@ class CompagniesRepository {
           return $stmt->execute([
                ':nom'  => $compagnie->getNom(),
                ':pays' => $compagnie->getPays(),
-               ':id'   => $compagnie->getId(),
+               ':id'   => $compagnie->getIdCompagnie(),
           ]);
      }
 

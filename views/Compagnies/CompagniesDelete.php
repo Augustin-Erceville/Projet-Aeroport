@@ -7,7 +7,7 @@ require_once __DIR__ . '/../../source/repository/CompagniesRepository.php';
 
 $config        = new Config();
 $bdd           = $config->connexion();
-$compagnieRepo = new repository\CompagniesRepository($bdd);
+$compagnieRepo = new CompagniesRepository($bdd);
 
 $id = isset($_GET['id']) ? (int) $_GET['id'] : null;
 if ($id === null) {
