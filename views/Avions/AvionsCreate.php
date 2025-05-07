@@ -1,62 +1,73 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-require_once __DIR__ . '/../../source/bdd/config.php';
-require_once __DIR__ . '/../../source/model/AvionsModel.php';
-require_once __DIR__ . '/../../source/repository/AvionsRepository.php';
-require_once __DIR__ . '/../../source/model/CompagniesModel.php';
-require_once __DIR__ . '/../../source/repository/CompagniesRepository.php';
+require_once '../../source/bdd/config.php';
 
 $config = new Config();
 $bdd = $config->connexion();
 
-$avionRepo = new AvionsRepository($bdd);
-$compagnieRepo = new CompagniesRepository($bdd);
-$compagnies = $compagnieRepo->getCompagnies();
-
+try {
+     $stmt = $bdd->query("SELECT id_compagnie, nom FROM compagnies");
+     $compagnies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+     die("Erreur lors de la récupération des compagnies : " . $e->getMessage());
+}
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-     $immatriculation = isset($_POST['immatriculation']) ? trim($_POST['immatriculation']) : '';
-     $type           = isset($_POST['type']) ? trim($_POST['type']) : '';
-     $capacite       = isset($_POST['capacite']) ? (int) $_POST['capacite'] : 0;
-     $id_compagnie   = isset($_POST['compagnie']) ? (int) $_POST['compagnie'] : 0;
+     $immatriculation = $_POST['immatriculation'] ?? '';
+     $modele = $_POST['modele'] ?? '';
+     $capacite = $_POST['capacite'] ?? '';
+     $ref_compagnie = $_POST['ref_compagnie'] ?? null;
 
-     if (!empty($immatriculation) && !empty($type) && $capacite > 0 && $id_compagnie > 0) {
-          $avion = new AvionModel(null, $immatriculation, $type, $capacite, $id_compagnie);
-          $avionRepo->createAvion($avion);
-          header('Location: AvionsRead.php?success=created');
-          exit;
+     // Validation rapide
+     if (!empty($immatriculation) && !empty($modele) && !empty($capacite) && !empty($ref_compagnie)) {
+          try {
+               $query = "INSERT INTO avions (immatriculation, modele, capacite, ref_compagnie) 
+                      VALUES (:immatriculation, :modele, :capacite, :ref_compagnie)";
+               $stmt = $bdd->prepare($query);
+               $stmt->execute([
+                    ':immatriculation' => $immatriculation,
+                    ':modele' => $modele,
+                    ':capacite' => $capacite,
+                    ':ref_compagnie' => $ref_compagnie
+               ]);
+
+               header('Location: AvionsRead.php');
+               exit();
+          } catch (PDOException $e) {
+               die("Erreur lors de l'ajout de l'avion : " . $e->getMessage());
+          }
      } else {
-          $error = "Tous les champs sont obligatoires et la capacité doit être positive.";
+          $erreur = "Tous les champs sont obligatoires.";
      }
 }
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>AEROPORTAL – GESTION AVIONS</title>
+     <meta charset="UTF-8">
+     <title>Ajouter un Avion</title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom bg-dark">
-     <div class="col-2 ms-3 text-light">
-          <a href="../Acceuil.php" class="d-flex align-items-center text-decoration-none text-light">
+<header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
+     <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
+          <a href="../Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
                <img src="../../documentation/img/Logo.png" style="max-width: 15%; height: auto;">
-               <div class="fs-4 ms-2">AEROPORTAL</div>
+               <div class="fs-4 text-light">AEROPORTAL</div>
           </a>
      </div>
-     <ul class="nav col justify-content-center">
-          <li><a href="../Acceuil.php" class="nav-link px-2"><button class="btn btn-outline-info">Accueil</button></a></li>
-          <li><a href="AvionsRead.php" class="nav-link px-2"><button class="btn btn-outline-light active">Gestion avions</button></a></li>
-          <li><a href="../Compagnies/CompagniesRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion compagnies</button></a></li>
-          <li><a href="../Conges/CongesRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion congés</button></a></li>
-          <li><a href="../Pilotes/PilotesRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion pilotes</button></a></li>
-          <li><a href="../Reservations/ReservationsRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion réservations</button></a></li>
-          <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
-          <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button class="btn btn-outline-light">Gestion vols</button></a></li>
+     <ul class="nav col mb-2 justify-content-center mb-md-0">
+          <li><a href="../Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-info">Acceuil</button></a></li>
+          <li><a href="../Avions/AvionsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light active">Gestion avions</button></a></li>
+          <li><a href="../Compagnies/CompagniesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion compagnies</button></a></li>
+          <li><a href="../Conges/CongesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion congés</button></a></li>
+          <li><a href="../Pilotes/PilotesRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion pilotes</button></a></li>
+          <li><a href="../Reservations/ReservationsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion réservations</button></a></li>
+          <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
+          <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion vols</button></a></li>
      </ul>
-     <div class="col-2 me-3 text-end">
+     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <a href="../../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
           <?php else: ?>
@@ -65,48 +76,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <?php endif; ?>
      </div>
 </header>
-
 <div class="container mt-5">
-     <h3 class="mb-4">Ajouter un avion</h3>
+     <h2 class="mb-4 text-center">Ajouter un nouvel avion</h2>
 
-     <?php if (isset($error)) : ?>
-          <div class="alert alert-danger"><?= htmlspecialchars($error) ?></div>
-     <?php elseif (isset($_GET['success']) && $_GET['success'] === 'created') : ?>
-          <div class="alert alert-success">L'avion a été ajouté avec succès !</div>
+     <?php if (!empty($erreur)): ?>
+          <div class="alert alert-danger"><?= htmlspecialchars($erreur) ?></div>
      <?php endif; ?>
 
-     <form method="post" class="row g-3">
-          <div class="col-md-6">
-               <label for="immatriculation" class="form-label">Immatriculation :</label>
-               <input type="text" id="immatriculation" name="immatriculation" class="form-control" minlength="6" maxlength="6" required>
+     <form method="post" action="">
+          <div class="mb-3">
+               <label for="immatriculation" class="form-label">Immatriculation</label>
+               <input type="text" class="form-control" id="immatriculation" name="immatriculation" required>
           </div>
 
-          <div class="col-md-6">
-               <label for="type" class="form-label">Type :</label>
-               <input type="text" id="type" name="type" class="form-control" required>
+          <div class="mb-3">
+               <label for="modele" class="form-label">Modèle</label>
+               <input type="text" class="form-control" id="modele" name="modele" required>
           </div>
 
-          <div class="col-md-6">
-               <label for="capacite" class="form-label">Capacité :</label>
-               <input type="number" id="capacite" name="capacite" min="1" class="form-control" required>
+          <div class="mb-3">
+               <label for="capacite" class="form-label">Capacité</label>
+               <input type="number" class="form-control" id="capacite" name="capacite" required>
           </div>
 
-          <div class="col-md-6">
-               <label for="compagnie" class="form-label">Compagnie :</label>
-               <select name="compagnie" id="compagnie" class="form-select" required>
-                    <option value="">-- Sélectionner une compagnie --</option>
-                    <?php foreach ($compagnies as $compagnie) : ?>
-                         <option value="<?= htmlspecialchars($compagnie->getIdCompagnie()) ?>">
-                         <?= htmlspecialchars($compagnie->getNom()) ?> (<?= htmlspecialchars($compagnie->getPays()) ?>)
+          <div class="mb-3">
+               <label for="ref_compagnie" class="form-label">Compagnie</label>
+               <select class="form-select" id="ref_compagnie" name="ref_compagnie" required>
+                    <option value="" selected disabled>-- Sélectionner une compagnie --</option>
+                    <?php foreach ($compagnies as $compagnie): ?>
+                         <option value="<?= $compagnie['id_compagnie'] ?>">
+                              <?= htmlspecialchars($compagnie['nom']) ?>
                          </option>
                     <?php endforeach; ?>
                </select>
           </div>
 
-          <div class="col-12">
-               <button type="submit" class="btn btn-primary">Ajouter l'avion</button>
+          <div class="d-grid gap-2">
+               <button type="submit" class="btn btn-success">Ajouter</button>
+               <a href="AvionsRead.php" class="btn btn-secondary">Retour</a>
           </div>
      </form>
 </div>
+
 </body>
 </html>

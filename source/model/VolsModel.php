@@ -1,70 +1,108 @@
 <?php
 
 class VolModel {
-     private $id_Vol;
-     private $numeroVol;
-     private $ref_Compagnie;
-     private $ref_Avion;
-     private $aeroportDepart;
-     private $aeroportArrivee;
-     private $dateDepart;
-     private $dateArrivee;
-     private $prix;
-     private $statut;
+     private ?int $id_vol = null;
+     private string $numero_vol;
+     private int $ref_compagnie;
+     private int $ref_avion;
+     private string $aeroport_depart;
+     private string $aeroport_arrivee;
+     private string $date_depart;
+     private string $date_arrivee;
+     private float $prix;
+     private string $statut;
 
+     // Getter et Setter pour ID
+     public function getIdVol(): ?int {
+          return $this->id_vol;
+     }
 
+     public function setIdVol(int $id_vol): void {
+          $this->id_vol = $id_vol;
+     }
 
-     public function __construct($id_Vol = null, $numeroVol = "", $ref_Compagnie = 0, $ref_Avion = 0, $aeroportDepart = "", $aeroportArrivee = "", $dateDepart = "", $dateArrivee = "", $prix = 0.00, $statut = "prévu") {
-          $this->id_Vol = $id_Vol;
-          $this->numeroVol = $numeroVol;
-          $this->ref_Compagnie = $ref_Compagnie;
-          $this->ref_Avion = $ref_Avion;
-          $this->aeroportDepart = $aeroportDepart;
-          $this->aeroportArrivee = $aeroportArrivee;
-          $this->dateDepart = $dateDepart;
-          $this->dateArrivee = $dateArrivee;
+     public function getNumeroVol(): string {
+          return $this->numero_vol;
+     }
+
+     public function setNumeroVol(string $numero_vol): void {
+          $this->numero_vol = $numero_vol;
+     }
+
+     public function getRefCompagnie(): int {
+          return $this->ref_compagnie;
+     }
+
+     public function setRefCompagnie(int $ref_compagnie): void {
+          $this->ref_compagnie = $ref_compagnie;
+     }
+
+     public function getRefAvion(): int {
+          return $this->ref_avion;
+     }
+
+     public function setRefAvion(int $ref_avion): void {
+          $this->ref_avion = $ref_avion;
+     }
+
+     public function getAeroportDepart(): string {
+          return $this->aeroport_depart;
+     }
+
+     public function setAeroportDepart(string $aeroport_depart): void {
+          $this->aeroport_depart = $aeroport_depart;
+     }
+
+     public function getAeroportArrivee(): string {
+          return $this->aeroport_arrivee;
+     }
+
+     public function setAeroportArrivee(string $aeroport_arrivee): void {
+          $this->aeroport_arrivee = $aeroport_arrivee;
+     }
+
+     public function getDateDepart(): string {
+          return $this->date_depart;
+     }
+
+     public function setDateDepart(string $date_depart): void {
+          $this->date_depart = $date_depart;
+     }
+
+     public function getDateArrivee(): string {
+          return $this->date_arrivee;
+     }
+
+     public function setDateArrivee(string $date_arrivee): void {
+          $this->date_arrivee = $date_arrivee;
+     }
+
+     public function getPrix(): float {
+          return $this->prix;
+     }
+
+     public function setPrix(float $prix): void {
           $this->prix = $prix;
+     }
+
+     public function getStatut(): string {
+          return $this->statut;
+     }
+
+     public function setStatut(string $statut): void {
           $this->statut = $statut;
      }
 
-
-
-     public function hydrate($data) {
-          if (isset($data['id_vol'])) $this->id_Vol = $data['id_vol'];
-          if (isset($data['numero_vol'])) $this->numeroVol = $data['numero_vol'];
-          if (isset($data['ref_compagnie'])) $this->ref_Compagnie = $data['ref_compagnie'];
-          if (isset($data['ref_avion'])) $this->ref_Avion = $data['ref_avion'];
-          if (isset($data['aeroport_depart'])) $this->aeroportDepart = $data['aeroport_depart'];
-          if (isset($data['aeroport_arrivee'])) $this->aeroportArrivee = $data['aeroport_arrivee'];
-          if (isset($data['date_depart'])) $this->dateDepart = $data['date_depart'];
-          if (isset($data['date_arrivee'])) $this->dateArrivee = $data['date_arrivee'];
-          if (isset($data['prix'])) $this->prix = $data['prix'];
-          if (isset($data['statut'])) $this->statut = $data['statut'];
+     public function hydrate(array $data): void {
+          $this->id_vol = $data['id_vol'] ?? null;
+          $this->numero_vol = $data['numero_vol'];
+          $this->ref_compagnie = $data['ref_compagnie'];
+          $this->ref_avion = $data['ref_avion'];
+          $this->aeroport_depart = $data['aeroport_depart'];
+          $this->aeroport_arrivee = $data['aeroport_arrivee'];
+          $this->date_depart = $data['date_depart'];
+          $this->date_arrivee = $data['date_arrivee'];
+          $this->prix = $data['prix'];
+          $this->statut = $data['statut'];
      }
-
-
-
-     public function getid_Vol() { return $this->id_Vol; }
-     public function getNumeroVol() { return $this->numeroVol; }
-     public function getref_Compagnie() { return $this->ref_Compagnie; }
-     public function getRef_Avion() { return $this->ref_Avion; }
-     public function getAeroportDepart() { return $this->aeroportDepart; }
-     public function getAeroportArrivee() { return $this->aeroportArrivee; }
-     public function getDateDepart() { return $this->dateDepart; }
-     public function getDateArrivee() { return $this->dateArrivee; }
-     public function getPrix() { return $this->prix; }
-     public function getStatut() { return $this->statut; }
-
-
-
-     public function setid_Vol($id_Vol) { $this->id_Vol = $id_Vol; }
-     public function setNumeroVol($numeroVol) { $this->numeroVol = $numeroVol; }
-     public function setref_Compagnie($ref_Compagnie) { $this->ref_Compagnie = $ref_Compagnie; }
-     public function setRef_Avion($ref_Avion) { $this->ref_Avion = $ref_Avion; }
-     public function setAeroportDepart($aeroportDepart) { $this->aeroportDepart = $aeroportDepart; }
-     public function setAeroportArrivee($aeroportArrivee) { $this->aeroportArrivee = $aeroportArrivee; }
-     public function setDateDepart($dateDepart) { $this->dateDepart = $dateDepart; }
-     public function setDateArrivee($dateArrivee) { $this->dateArrivee = $dateArrivee; }
-     public function setPrix($prix) { $this->prix = $prix; }
-     public function setStatut($statut) { $this->statut = $statut; }
 }

@@ -1,13 +1,13 @@
 <?php
 
 class VolsRepository {
-     private $bdd;
+     private PDO $bdd;
 
-     public function __construct($bdd) {
+     public function __construct(PDO $bdd) {
           $this->bdd = $bdd;
      }
 
-     public function createVol(VolModel $vol) {
+     public function createVol(VolModel $vol): VolModel {
           $query = "INSERT INTO vols (numero_vol, ref_compagnie, ref_avion, aeroport_depart, aeroport_arrivee, date_depart, date_arrivee, prix, statut)
                   VALUES (:numero_vol, :ref_compagnie, :ref_avion, :aeroport_depart, :aeroport_arrivee, :date_depart, :date_arrivee, :prix, :statut)";
           $stmt = $this->bdd->prepare($query);
@@ -22,25 +22,18 @@ class VolsRepository {
                ':prix' => $vol->getPrix(),
                ':statut' => $vol->getStatut()
           ]);
-          $vol->setIdVol($this->bdd->lastInsertId());
+
+          $vol->setIdVol((int) $this->bdd->lastInsertId());
           return $vol;
      }
 
-     public function getVols() {
-          $query = "SELECT * FROM vols";
+     public function getVols(): array {
+          $query = "SELECT * FROM V_vols";
           $stmt = $this->bdd->query($query);
-          $vols = [];
-
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-               $vol = new VolModel();
-               $vol->hydrate($row);
-               $vols[] = $vol;
-          }
-
-          return $vols;
+          return $stmt->fetchAll(PDO::FETCH_ASSOC);
      }
 
-     public function getVolById($id) {
+     public function getVolById(int $id): ?VolModel {
           $query = "SELECT * FROM vols WHERE id_vol = :id";
           $stmt = $this->bdd->prepare($query);
           $stmt->execute([':id' => $id]);
@@ -55,11 +48,17 @@ class VolsRepository {
           return null;
      }
 
-     public function updateVol(VolModel $vol) {
+     public function updateVol(VolModel $vol): void {
           $query = "UPDATE vols 
-                  SET numero_vol = :numero_vol, ref_compagnie = :ref_compagnie, ref_avion = :ref_avion,
-                      aeroport_depart = :aeroport_depart, aeroport_arrivee = :aeroport_arrivee,
-                      date_depart = :date_depart, date_arrivee = :date_arrivee, prix = :prix, statut = :statut
+                  SET numero_vol = :numero_vol,
+                      ref_compagnie = :ref_compagnie,
+                      ref_avion = :ref_avion,
+                      aeroport_depart = :aeroport_depart,
+                      aeroport_arrivee = :aeroport_arrivee,
+                      date_depart = :date_depart,
+                      date_arrivee = :date_arrivee,
+                      prix = :prix,
+                      statut = :statut
                   WHERE id_vol = :id_vol";
           $stmt = $this->bdd->prepare($query);
           $stmt->execute([
@@ -76,7 +75,7 @@ class VolsRepository {
           ]);
      }
 
-     public function deleteVol($id) {
+     public function deleteVol(int $id): void {
           $query = "DELETE FROM vols WHERE id_vol = :id";
           $stmt = $this->bdd->prepare($query);
           $stmt->execute([':id' => $id]);

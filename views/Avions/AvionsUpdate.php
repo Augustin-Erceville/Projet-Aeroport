@@ -1,55 +1,72 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
 
-require_once __DIR__ . '/../../source/bdd/config.php';
-require_once __DIR__ . '/../../source/model/AvionsModel.php';
-require_once __DIR__ . '/../../source/repository/AvionsRepository.php';
+require_once '../../source/bdd/config.php';
 
-$config         = new Config();
-$bdd            = $config->connexion();
-$avionRepo      = new AvionsRepository($bdd);
+$config = new Config();
+$bdd = $config->connexion();
 
-if (!isset($_GET['id'])) {
-     die('ID de l\'avion manquant.');
+if (!isset($_GET['id']) || empty($_GET['id'])) {
+     header('Location: AvionsRead.php');
+     exit();
 }
 
-$id = intval($_GET['id']);
-$avionData = $avionRepo->getAvionById($id);
+$id = (int)$_GET['id'];
 
-if (!$avionData) {
-     die('Avion non trouvé.');
+try {
+     $stmt = $bdd->prepare("SELECT * FROM avions WHERE id_avion = :id");
+     $stmt->execute([':id' => $id]);
+     $avion = $stmt->fetch(PDO::FETCH_ASSOC);
+
+     if (!$avion) {
+          header('Location: AvionsRead.php');
+          exit();
+     }
+
+     $stmt = $bdd->query("SELECT id_compagnie, nom FROM compagnies");
+     $compagnies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+} catch (PDOException $e) {
+     die("Erreur lors de la récupération de l'avion : " . $e->getMessage());
 }
-
-$avion = new AvionModel();
-$avion->hydrate((array)$avionData);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
      $immatriculation = $_POST['immatriculation'] ?? '';
      $modele = $_POST['modele'] ?? '';
-     $capacite = $_POST['capacite'] ?? 0;
-     $ref_compagnie = $_POST['ref_compagnie'] ?? 0;
+     $capacite = $_POST['capacite'] ?? '';
+     $ref_compagnie = $_POST['ref_compagnie'] ?? null;
 
-     $avion->setImmatriculation($immatriculation);
-     $avion->setModele($modele);
-     $avion->setCapacite($capacite);
-     $avion->setRefCompagnie($ref_compagnie);
+     if (!empty($immatriculation) && !empty($modele) && !empty($capacite) && !empty($ref_compagnie)) {
+          try {
+               $query = "UPDATE avions 
+                      SET immatriculation = :immatriculation, modele = :modele, capacite = :capacite, ref_compagnie = :ref_compagnie
+                      WHERE id_avion = :id";
+               $stmt = $bdd->prepare($query);
+               $stmt->execute([
+                    ':immatriculation' => $immatriculation,
+                    ':modele' => $modele,
+                    ':capacite' => $capacite,
+                    ':ref_compagnie' => $ref_compagnie,
+                    ':id' => $id
+               ]);
 
-     $avionRepo->updateAvion($avion);
-
-     header('Location: AvionsRead.php?success=updated');
-     exit;
+               header('Location: AvionsRead.php');
+               exit();
+          } catch (PDOException $e) {
+               die("Erreur lors de la mise à jour de l'avion : " . $e->getMessage());
+          }
+     } else {
+          $erreur = "Tous les champs sont obligatoires.";
+     }
 }
 ?>
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-     <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <title>AEROPORTAL - MODIFICATION AVIONS</title>
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-           crossorigin="anonymous">
+     <meta charset="UTF-8">
+     <title>Modifier un Avion</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
@@ -69,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
           <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion vols</button></a></li>
      </ul>
-
      <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <a href="../../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
@@ -79,31 +95,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <?php endif; ?>
      </div>
 </header>
-<div class="container">
-     <h4 class="text-uppercase text-center">Modifier un avion</h4>
+<div class="container mt-5">
+     <h2 class="mb-4 text-center">Modifier l'avion</h2>
 
-     <?php if (isset($error_message)): ?>
-          <div class="alert alert-danger"><?= htmlspecialchars($error_message, ENT_QUOTES, 'UTF-8') ?></div>
+     <?php if (!empty($erreur)): ?>
+          <div class="alert alert-danger"><?= htmlspecialchars($erreur) ?></div>
      <?php endif; ?>
 
-     <form method="post" class="mt-4">
+     <form method="post" action="">
           <div class="mb-3">
                <label for="immatriculation" class="form-label">Immatriculation</label>
-               <input type="text" class="form-control" name="immatriculation" id="immatriculation" required value="<?= htmlspecialchars($avion->getImmatriculation()) ?>">
+               <input type="text" class="form-control" id="immatriculation" name="immatriculation" value="<?= htmlspecialchars($avion['immatriculation']) ?>" required>
           </div>
+
           <div class="mb-3">
                <label for="modele" class="form-label">Modèle</label>
-               <input type="text" class="form-control" name="modele" id="modele" required value="<?= htmlspecialchars($avion->getModele()) ?>">
+               <input type="text" class="form-control" id="modele" name="modele" value="<?= htmlspecialchars($avion['modele']) ?>" required>
           </div>
+
           <div class="mb-3">
                <label for="capacite" class="form-label">Capacité</label>
-               <input type="number" class="form-control" name="capacite" id="capacite" required value="<?= htmlspecialchars($avion->getCapacite()) ?>">
+               <input type="number" class="form-control" id="capacite" name="capacite" value="<?= htmlspecialchars($avion['capacite']) ?>" required>
           </div>
+
           <div class="mb-3">
-               <label for="ref_compagnie" class="form-label">Référence Compagnie</label>
-               <input type="number" class="form-control" name="ref_compagnie" id="ref_compagnie" required value="<?= htmlspecialchars($avion->getRefCompagnie()) ?>">
+               <label for="ref_compagnie" class="form-label">Compagnie</label>
+               <select class="form-select" id="ref_compagnie" name="ref_compagnie" required>
+                    <option value="" disabled>-- Sélectionner une compagnie --</option>
+                    <?php foreach ($compagnies as $compagnie): ?>
+                         <option value="<?= $compagnie['id_compagnie'] ?>" <?= $avion['ref_compagnie'] == $compagnie['id_compagnie'] ? 'selected' : '' ?>>
+                              <?= htmlspecialchars($compagnie['nom']) ?>
+                         </option>
+                    <?php endforeach; ?>
+               </select>
           </div>
-          <button type="submit" class="btn btn-primary">Modifier</button>
+
+          <div class="d-grid gap-2">
+               <button type="submit" class="btn btn-success">Modifier</button>
+               <a href="AvionsRead.php" class="btn btn-secondary">Annuler</a>
+          </div>
      </form>
 </div>
-<?php include '../Footer.php'; ?>
+
+</body>
+</html>
