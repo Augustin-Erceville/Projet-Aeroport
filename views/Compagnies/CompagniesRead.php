@@ -65,9 +65,9 @@ $compagnies = $compagnieRepo->getCompagnies();
         <tbody>
         <?php foreach ($compagnies as $compagnie): ?>
             <tr>
-                <td><?= htmlspecialchars($compagnie->getIdCompagnie() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
-                <td><?= htmlspecialchars($compagnie->getNom() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
-                <td><?= htmlspecialchars($compagnie->getPays() ?? 'Inconnu', ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($compagnie->getIdCompagnie() ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($compagnie->getNom() ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($compagnie->getPays() ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                 <td>
                     <a href="CompagniesUpdate.php?id=<?= $compagnie->getIdCompagnie() ?>" class="btn btn-warning btn-sm">✒️</a>
                     <a href="CompagniesDelete.php?id=<?= $compagnie->getIdCompagnie() ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette compagnie ?');">🗑️</a>

@@ -1,75 +1,64 @@
 <?php
 
-class PiloteModel {
-     private $id;
-     private $nom;
-     private $prenom;
-     private $licence;
-     private $compagnieId;
+class PiloteModel
+{
+     private $id_pilote;
+     private $ref_utilisateur;
+     private $ref_avion;
+     private $disponible;
 
-     public function __construct($id = null, $nom = "", $prenom = "", $licence = "", $compagnieId = 0) {
-          $this->id = $id;
-          $this->nom = $nom;
-          $this->prenom = $prenom;
-          $this->licence = $licence;
-          $this->compagnieId = $compagnieId;
-     }
-
-     public function hydrate($data) {
-          if (isset($data['id'])) {
-               $this->id = $data['id'];
-          }
-          if (isset($data['nom'])) {
-               $this->nom = $data['nom'];
-          }
-          if (isset($data['prenom'])) {
-               $this->prenom = $data['prenom'];
-          }
-          if (isset($data['licence'])) {
-               $this->licence = $data['licence'];
-          }
-          if (isset($data['compagnieId'])) {
-               $this->compagnieId = $data['compagnieId'];
+     public function __construct(array $data = [])
+     {
+          if (!empty($data)) {
+               $this->hydrate($data);
           }
      }
 
-     public function getId() {
-          return $this->id;
+     public function hydrate(array $data): void
+     {
+          $this->id_pilote = $data['id_pilote'] ?? null;
+          $this->ref_utilisateur = $data['ref_utilisateur'] ?? null;
+          $this->ref_avion = $data['ref_avion'] ?? null;
+          $this->disponible = $data['disponible'] ?? 'Disponible';
      }
 
-     public function getNom() {
-          return $this->nom;
+     public function getIdPilote(): ?int
+     {
+          return $this->id_pilote;
      }
 
-     public function getPrenom() {
-          return $this->prenom;
+     public function getRefUtilisateur(): ?int
+     {
+          return $this->ref_utilisateur;
      }
 
-     public function getLicence() {
-          return $this->licence;
+     public function getRefAvion(): ?int
+     {
+          return $this->ref_avion;
      }
 
-     public function getCompagnieId() {
-          return $this->compagnieId;
+     public function getDisponible(): ?string
+     {
+          return $this->disponible;
      }
 
-     public function setId($id) {
-          $this->id = $id;
+     public function setIdPilote(?int $id_pilote): void
+     {
+          $this->id_pilote = $id_pilote;
      }
 
-     public function setNom($nom) {
-          $this->nom = $nom;
+     public function setRefUtilisateur(?int $ref_utilisateur): void
+     {
+          $this->ref_utilisateur = $ref_utilisateur;
      }
 
-     public function setPrenom($prenom) {
-          $this->prenom = $prenom;
+     public function setRefAvion(?int $ref_avion): void
+     {
+          $this->ref_avion = $ref_avion;
      }
 
-     public function setLicence($licence) {
-          $this->licence = $licence;
-     }
-
-     public function setCompagnieId($compagnieId) {
-          $this->compagnieId = $compagnieId;
+     public function setDisponible(?string $disponible): void
+     {
+          $this->disponible = $disponible;
      }
 }

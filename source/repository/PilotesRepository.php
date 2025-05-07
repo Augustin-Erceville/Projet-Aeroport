@@ -1,76 +1,78 @@
 <?php
 
-class PilotesRepository {
-     private $pdo;
+require_once __DIR__ . '/../model/PilotesModel.php';
 
-     public function __construct($pdo) {
-          $this->pdo = $pdo;
+class PilotesRepository
+{
+     private $bdd;
+
+     public function __construct($bdd)
+     {
+          $this->bdd = $bdd;
      }
 
-     public function createPilote(PilotesModel $pilote) {
-          $query = "INSERT INTO pilotes (ref_utilisateur, ref_avion, disponible) 
+     public function createPilote(PiloteModel $pilote): void
+     {
+          $query = "INSERT INTO pilotes (ref_utilisateur, ref_avion, disponible)
                   VALUES (:ref_utilisateur, :ref_avion, :disponible)";
-          $stmt = $this->pdo->prepare($query);
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([
                ':ref_utilisateur' => $pilote->getRefUtilisateur(),
                ':ref_avion' => $pilote->getRefAvion(),
-               ':disponible' => $pilote->getDisponible(),
+               ':disponible' => $pilote->getDisponible()
           ]);
-          $pilote->setId($this->pdo->lastInsertId());
-          return $pilote;
+          $pilote->setIdPilote($this->bdd->lastInsertId());
      }
 
-     public function getPilote($id) {
-          $query = "SELECT * FROM pilotes WHERE id_pilote = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
+     public function getPilotes(): array
+     {
+          $query = "SELECT * FROM pilotes";
+          $stmt = $this->bdd->query($query);
+
+          $pilotes = [];
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $pilote = new PiloteModel();
+               $pilote->hydrate($row);
+               $pilotes[] = $pilote;
+          }
+
+          return $pilotes;
+     }
+     public function getPiloteById(int $id): ?PiloteModel
+     {
+          $query = "SELECT * FROM pilotes WHERE id_pilote = :id_pilote";
+          $stmt = $this->bdd->prepare($query);
+          $stmt->execute([':id_pilote' => $id]);
+
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
           if ($row) {
-               return new PilotesModel(
-                    $row['id_pilote'],
-                    $row['ref_utilisateur'],
-                    $row['ref_avion'],
-                    $row['disponible']
-               );
+               $pilote = new PiloteModel();
+               $pilote->hydrate($row);
+               return $pilote;
           }
+
           return null;
      }
 
-     public function getPilotes() {
-          $query = "SELECT * FROM pilotes";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute();
-          $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-          $pilotes = [];
-          foreach ($rows as $row) {
-               $pilotes[] = new PilotesModel(
-                    $row['id_pilote'],
-                    $row['ref_utilisateur'],
-                    $row['ref_avion'],
-                    $row['disponible']
-               );
-          }
-          return $pilotes;
-     }
-
-     public function updatePilote(PilotesModel $pilote) {
+     public function updatePilote(PiloteModel $pilote): void
+     {
           $query = "UPDATE pilotes 
-                  SET ref_utilisateur = :ref_utilisateur, ref_avion = :ref_avion, disponible = :disponible 
-                  WHERE id_pilote = :id";
-          $stmt = $this->pdo->prepare($query);
+                  SET ref_utilisateur = :ref_utilisateur, ref_avion = :ref_avion, disponible = :disponible
+                  WHERE id_pilote = :id_pilote";
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([
                ':ref_utilisateur' => $pilote->getRefUtilisateur(),
                ':ref_avion' => $pilote->getRefAvion(),
                ':disponible' => $pilote->getDisponible(),
-               ':id' => $pilote->getId(),
+               ':id_pilote' => $pilote->getIdPilote()
           ]);
      }
 
-     public function deletePilote($id) {
-          $query = "DELETE FROM pilotes WHERE id_pilote = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
+     public function deletePilote(int $id): void
+     {
+          $query = "DELETE FROM pilotes WHERE id_pilote = :id_pilote";
+          $stmt = $this->bdd->prepare($query);
+          $stmt->execute([':id_pilote' => $id]);
      }
 }
