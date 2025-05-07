@@ -136,6 +136,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
      </form>
 </div>
-
-</body>
-</html>
+<?php include '../Footer.php'; ?>

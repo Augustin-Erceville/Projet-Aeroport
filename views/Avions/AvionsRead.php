@@ -23,7 +23,6 @@ try {
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
      <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
           <a href="../Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
@@ -54,7 +53,7 @@ try {
 <div class="mx-4">
      <div class="row">
           <h4 class="text-center text-uppercase">Liste des avions</h4>
-          <a href="AvionsCreate.php" class="btn btn-outline-success text-uppercase">Ajouter un vol</a>
+          <a href="AvionsCreate.php" class="btn btn-outline-success text-uppercase">Ajouter un avion</a>
      </div>
 </div>
 
