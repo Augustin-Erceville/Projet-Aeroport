@@ -1,92 +1,84 @@
 <?php
 
 class VolsRepository {
-     private $pdo;
+     private $bdd;
 
-     public function __construct($pdo) {
-          $this->pdo = $pdo;
+     public function __construct($bdd) {
+          $this->bdd = $bdd;
      }
 
      public function createVol(VolModel $vol) {
-          $query = "INSERT INTO vols (numero_vol, ref_compagnie, ref_avion, date_depart, date_arrivee, statut) 
-                  VALUES (:numero_vol, :compagnie_id, :avion_id, :pilote_id, :date_depart, :date_arrivee, :statut)";
-          $stmt = $this->pdo->prepare($query);
+          $query = "INSERT INTO vols (numero_vol, ref_compagnie, ref_avion, aeroport_depart, aeroport_arrivee, date_depart, date_arrivee, prix, statut)
+                  VALUES (:numero_vol, :ref_compagnie, :ref_avion, :aeroport_depart, :aeroport_arrivee, :date_depart, :date_arrivee, :prix, :statut)";
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([
                ':numero_vol' => $vol->getNumeroVol(),
-               ':compagnie_id' => $vol->getCompagnieId(),
-               ':avion_id' => $vol->getAvionId(),
-               ':pilote_id' => $vol->getPiloteId(),
+               ':ref_compagnie' => $vol->getRefCompagnie(),
+               ':ref_avion' => $vol->getRefAvion(),
+               ':aeroport_depart' => $vol->getAeroportDepart(),
+               ':aeroport_arrivee' => $vol->getAeroportArrivee(),
                ':date_depart' => $vol->getDateDepart(),
                ':date_arrivee' => $vol->getDateArrivee(),
-               ':statut' => $vol->getStatut(),
+               ':prix' => $vol->getPrix(),
+               ':statut' => $vol->getStatut()
           ]);
-          $vol->setId($this->pdo->lastInsertId());
+          $vol->setIdVol($this->bdd->lastInsertId());
           return $vol;
      }
 
-    public function getVols() {
-        $query = "SELECT * FROM vols";
-        $stmt = $this->pdo->query($query);
-        $vols = [];
+     public function getVols() {
+          $query = "SELECT * FROM vols";
+          $stmt = $this->bdd->query($query);
+          $vols = [];
 
-        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $vols[] = new VolModel(
-                $row['id_vol'],
-                $row['numero_vol'],
-                $row['compagnie_id'],
-                $row['avion_id'],
-                $row['pilote_id'],
-                $row['date_depart'],
-                $row['date_arrivee'],
-                $row['statut']
-            );
-        }
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $vol = new VolModel();
+               $vol->hydrate($row);
+               $vols[] = $vol;
+          }
 
-        return $vols;
-    }
+          return $vols;
+     }
 
      public function getVolById($id) {
           $query = "SELECT * FROM vols WHERE id_vol = :id";
-          $stmt = $this->pdo->prepare($query);
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([':id' => $id]);
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
           if ($row) {
-               return new VolModel(
-                    $row['id'],
-                    $row['numero_vol'],
-                    $row['compagnie_id'],
-                    $row['avion_id'],
-                    $row['pilote_id'],
-                    $row['date_depart'],
-                    $row['date_arrivee'],
-                    $row['statut']
-               );
+               $vol = new VolModel();
+               $vol->hydrate($row);
+               return $vol;
           }
+
           return null;
      }
 
      public function updateVol(VolModel $vol) {
           $query = "UPDATE vols 
-                  SET numero_vol = :numero_vol, compagnie_id = :compagnie_id, avion_id = :avion_id, 
-                      pilote_id = :pilote_id, date_depart = :date_depart, date_arrivee = :date_arrivee, statut = :statut 
-                  WHERE id_vol = :id";
-          $stmt = $this->pdo->prepare($query);
+                  SET numero_vol = :numero_vol, ref_compagnie = :ref_compagnie, ref_avion = :ref_avion,
+                      aeroport_depart = :aeroport_depart, aeroport_arrivee = :aeroport_arrivee,
+                      date_depart = :date_depart, date_arrivee = :date_arrivee, prix = :prix, statut = :statut
+                  WHERE id_vol = :id_vol";
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([
                ':numero_vol' => $vol->getNumeroVol(),
-               ':compagnie_id' => $vol->getCompagnieId(),
-               ':avion_id' => $vol->getAvionId(),
-               ':pilote_id' => $vol->getPiloteId(),
+               ':ref_compagnie' => $vol->getRefCompagnie(),
+               ':ref_avion' => $vol->getRefAvion(),
+               ':aeroport_depart' => $vol->getAeroportDepart(),
+               ':aeroport_arrivee' => $vol->getAeroportArrivee(),
                ':date_depart' => $vol->getDateDepart(),
                ':date_arrivee' => $vol->getDateArrivee(),
+               ':prix' => $vol->getPrix(),
                ':statut' => $vol->getStatut(),
-               ':id' => $vol->getId(),
+               ':id_vol' => $vol->getIdVol()
           ]);
      }
 
      public function deleteVol($id) {
           $query = "DELETE FROM vols WHERE id_vol = :id";
-          $stmt = $this->pdo->prepare($query);
+          $stmt = $this->bdd->prepare($query);
           $stmt->execute([':id' => $id]);
      }
 }

@@ -54,7 +54,7 @@ $utilisateurs = $utilisateurRepo->getUsers();
 <div class="row my-3">
     <div class="col-1"></div>
     <table class="col table table-striped">
-          <thead>
+          <thead class="table-dark">
           <tr>
                <th>ID</th>
                <th>Prénom</th>
