@@ -92,6 +92,35 @@ CREATE TABLE IF NOT EXISTS `vols` (
                                       KEY `ref_compagnie` (`ref_compagnie`),
                                       KEY `ref_avion` (`ref_avion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+DROP VIEW IF EXISTS `v_avions`;
+CREATE TABLE IF NOT EXISTS `v_avions` (
+                                          `ID` int
+    ,`Immatriculation` varchar(20)
+    ,`Modèle` varchar(50)
+    ,`Capacité` int
+    ,`Compagnie` varchar(100)
+);
+DROP VIEW IF EXISTS `v_vols`;
+CREATE TABLE IF NOT EXISTS `v_vols` (
+                                        `ID` int
+    ,`Numéro Vol` varchar(10)
+    ,`Compagnie` varchar(100)
+    ,`Avion` varchar(20)
+    ,`Aéroport Départ` varchar(100)
+    ,`Aéroport Arrivée` varchar(100)
+    ,`Date Départ` datetime
+    ,`Date Arrivée` datetime
+    ,`Prix` decimal(10,2)
+    ,`Statut` enum('prévu','en cours','retardé','annulé','terminé')
+);
+DROP TABLE IF EXISTS `v_avions`;
+
+DROP VIEW IF EXISTS `v_avions`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_avions`  AS SELECT `avions`.`id_avion` AS `ID`, `avions`.`immatriculation` AS `Immatriculation`, `avions`.`modele` AS `Modèle`, `avions`.`capacite` AS `Capacité`, `compagnies`.`nom` AS `Compagnie` FROM (`avions` left join `compagnies` on((`avions`.`ref_compagnie` = `compagnies`.`id_compagnie`))) ;
+DROP TABLE IF EXISTS `v_vols`;
+
+DROP VIEW IF EXISTS `v_vols`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_vols`  AS SELECT `vols`.`id_vol` AS `ID`, `vols`.`numero_vol` AS `Numéro Vol`, `compagnies`.`nom` AS `Compagnie`, `avions`.`immatriculation` AS `Avion`, `vols`.`aeroport_depart` AS `Aéroport Départ`, `vols`.`aeroport_arrivee` AS `Aéroport Arrivée`, `vols`.`date_depart` AS `Date Départ`, `vols`.`date_arrivee` AS `Date Arrivée`, `vols`.`prix` AS `Prix`, `vols`.`statut` AS `Statut` FROM ((`vols` left join `compagnies` on((`vols`.`ref_compagnie` = `compagnies`.`id_compagnie`))) left join `avions` on((`avions`.`ref_compagnie` = `compagnies`.`id_compagnie`))) ;
 
 
 ALTER TABLE `avions`
