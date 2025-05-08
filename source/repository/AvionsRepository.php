@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../model/AvionsModel.php';
 
 class AvionsRepository {
      private $bdd;
@@ -7,7 +8,7 @@ class AvionsRepository {
           $this->bdd = $bdd;
      }
 
-     public function createAvion(AvionModel $avion) {
+     public function createAvion(AvionsModel $avion) {
           $sql = "INSERT INTO avions (immatriculation, modele, capacite, ref_compagnie) VALUES (:immatriculation, :modele, :capacite, :ref_compagnie)";
 
           $stmt = $this->bdd->prepare($sql);
@@ -25,22 +26,36 @@ class AvionsRepository {
           return $stmt->execute();
      }
 
-     public function getAvions() {
-          $sql = "SELECT * FROM avions";
-          $stmt = $this->bdd->prepare($sql);
-          $stmt->execute();
-          return $stmt->fetchAll(PDO::FETCH_OBJ);
-     }
+    public function getAvions(): array {
+        $stmt = $this->bdd->query("SELECT * FROM avions");
+        $avions = [];
 
-     public function getAvionById($id) {
-          $sql = "SELECT * FROM avions WHERE id_avion = :id_avion";
-          $stmt = $this->bdd->prepare($sql);
-          $stmt->bindParam(':id_avion', $id, PDO::PARAM_INT);
-          $stmt->execute();
-          return $stmt->fetch(PDO::FETCH_OBJ);
-     }
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $avion = new AvionsModel();
+            $avion->hydrate($row);
+            $avions[] = $avion;
+        }
 
-     public function updateAvion(AvionModel $avion) {
+        return $avions;
+    }
+
+    public function getAvionById($id): ?AvionModel {
+        $sql = "SELECT * FROM avions WHERE id_avion = :id_avion";
+        $stmt = $this->bdd->prepare($sql);
+        $stmt->bindParam(':id_avion', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            $avion = new AvionModel();
+            $avion->hydrate($row);
+            return $avion;
+        }
+        return null;
+    }
+
+
+    public function updateAvion(AvionsModel $avion) {
           $sql = "UPDATE avions SET immatriculation = :immatriculation, modele = :modele, capacite = :capacite, ref_compagnie = :ref_compagnie WHERE id_avion = :id_avion";
           $stmt = $this->bdd->prepare($sql);
 

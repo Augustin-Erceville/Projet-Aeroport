@@ -1,75 +1,89 @@
 <?php
 
-class ReservationModel {
-     private $id;
-     private $passagerId;
-     private $volId;
-     private $dateReservation;
-     private $statut;
+class ReservationsModel
+{
+    private $id_reservation;
+    private $ref_utilisateur;
+    private $ref_vol;
+    private $classe;
+    private $statut;
+    private $date_reservation;
 
-     public function __construct($id = null, $passagerId = 0, $volId = 0, $dateReservation = "", $statut = "En attente") {
-          $this->id = $id;
-          $this->passagerId = $passagerId;
-          $this->volId = $volId;
-          $this->dateReservation = $dateReservation;
-          $this->statut = $statut;
-     }
+    public function __construct(array $data = [])
+    {
+        if (!empty($data)) {
+            $this->hydrate($data);
+        }
+    }
 
-     public function hydrate($data) {
-          if (isset($data['id'])) {
-               $this->id = $data['id'];
-          }
-          if (isset($data['passagerId'])) {
-               $this->passagerId = $data['passagerId'];
-          }
-          if (isset($data['volId'])) {
-               $this->volId = $data['volId'];
-          }
-          if (isset($data['dateReservation'])) {
-               $this->dateReservation = $data['dateReservation'];
-          }
-          if (isset($data['statut'])) {
-               $this->statut = $data['statut'];
-          }
-     }
+    public function hydrate(array $data): void
+    {
+        foreach ($data as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (method_exists($this, $method)) {
+                $this->$method($value);
+            }
+        }
+    }
 
-     public function getId() {
-          return $this->id;
-     }
+    // Getters
+    public function getId_reservation(): int
+    {
+        return $this->id_reservation;
+    }
 
-     public function getPassagerId() {
-          return $this->passagerId;
-     }
+    public function getRef_utilisateur(): int
+    {
+        return $this->ref_utilisateur;
+    }
 
-     public function getVolId() {
-          return $this->volId;
-     }
+    public function getRef_vol(): int
+    {
+        return $this->ref_vol;
+    }
 
-     public function getDateReservation() {
-          return $this->dateReservation;
-     }
+    public function getClasse(): string
+    {
+        return $this->classe;
+    }
 
-     public function getStatut() {
-          return $this->statut;
-     }
+    public function getStatut(): string
+    {
+        return $this->statut;
+    }
 
-     public function setId($id) {
-          $this->id = $id;
-     }
+    public function getDate_reservation(): string
+    {
+        return $this->date_reservation;
+    }
 
-     public function setPassagerId($passagerId) {
-          $this->passagerId = $passagerId;
-     }
+    // Setters
+    public function setId_reservation(int $id_reservation): void
+    {
+        $this->id_reservation = $id_reservation;
+    }
 
-     public function setVolId($volId) {
-          $this->volId = $volId;
-     }
+    public function setRef_utilisateur(int $ref_utilisateur): void
+    {
+        $this->ref_utilisateur = $ref_utilisateur;
+    }
 
-     public function setDateReservation($dateReservation) {
-          $this->dateReservation = $dateReservation;
-     }
+    public function setRef_vol(int $ref_vol): void
+    {
+        $this->ref_vol = $ref_vol;
+    }
 
-     public function setStatut($statut) {
-          $this->statut = $statut;
-     }
+    public function setClasse(string $classe): void
+    {
+        $this->classe = $classe;
+    }
+
+    public function setStatut(string $statut): void
+    {
+        $this->statut = $statut;
+    }
+    public function setDate_reservation(string $date_reservation): void
+    {
+        $this->date_reservation = $date_reservation;
+    }
 }

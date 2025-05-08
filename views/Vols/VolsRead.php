@@ -80,16 +80,16 @@ try {
           <?php if (count($vols) > 0): ?>
                <?php foreach ($vols as $vol): ?>
                     <tr>
-                         <td><?= htmlspecialchars($vol['ID'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Numéro Vol'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Compagnie'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Avion'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Aéroport Départ'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Aéroport Arrivée'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Date Départ'] ?? '') ?></td>
-                         <td><?= htmlspecialchars($vol['Date Arrivée'] ?? '') ?></td>
-                         <td><?= htmlspecialchars(number_format($vol['Prix'] ?? 0, 2, ',', ' ')) ?></td>
-                         <td><?= htmlspecialchars($vol['Statut'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['id_vol'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['numero_vol'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['ref_compagnie'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['ref_avion'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['aeroport_depart'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['aeroport_arrivee'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['date_depart'] ?? '') ?></td>
+                        <td><?= htmlspecialchars($vol['date_arrivee'] ?? '') ?></td>
+                        <td><?= htmlspecialchars(number_format($vol['prix'] ?? 0, 2, ',', ' ')) ?></td>
+                        <td><?= htmlspecialchars($vol['statut'] ?? '') ?></td>
                          <td>
                               <a href="VolsUpdate.php?id=<?= htmlspecialchars($vol['ID'] ?? '') ?>" class="btn btn-warning btn-sm">✏️</a>
                               <a href="VolsDelete.php?id=<?= htmlspecialchars($vol['ID'] ?? '') ?>" class="btn btn-danger btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce vol ?');">🗑️</a>
