@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
      try {
           if ($action === 'create') {
-               $vol = new VolModel();
+               $vol = new VolsModel();
                $vol->setNumeroVol($numero_vol);
                $vol->setRefCompagnie($ref_compagnie);
                $vol->setRefAvion($ref_avion);
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     throw new Exception("ID du vol non spécifié pour la mise à jour.");
                }
 
-               $vol = new VolModel();
+               $vol = new VolsModel();
                $vol->setIdVol($id_vol);
                $vol->setNumeroVol($numero_vol);
                $vol->setRefCompagnie($ref_compagnie);

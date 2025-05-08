@@ -31,8 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                    'id' => $user->getIdUser(),
                    'prenom' => $user->getPrenom(),
                    'nom' => $user->getNom(),
-                   'email' => $user->getEmail()
+                   'email' => $user->getEmail(),
+                   'telephone' => $user->getTelephone(),
+                   'ville_residence' => $user->getVilleResidence(),
+                   'date_naissance' => $user->getDateNaissance()
                ];
+
                $_SESSION['success'] = "Connexion réussie. Bienvenue " . htmlspecialchars($user->getPrenom()) . " !";
                header("Location: ../../views/Acceuil.php");
                exit();

@@ -1,6 +1,6 @@
 <?php
 
-class VolModel {
+class VolsModel {
      private ?int $id_vol = null;
      private string $numero_vol;
      private int $ref_compagnie;
@@ -11,8 +11,7 @@ class VolModel {
      private string $date_arrivee;
      private float $prix;
      private string $statut;
-
-     // Getter et Setter pour ID
+    private string $nom_compagnie;
      public function getIdVol(): ?int {
           return $this->id_vol;
      }
@@ -92,7 +91,15 @@ class VolModel {
      public function setStatut(string $statut): void {
           $this->statut = $statut;
      }
+    public function getNomCompagnie()
+    {
+        return $this->nom_compagnie;
+    }
 
+    public function setNomCompagnie($nom_compagnie)
+    {
+        $this->nom_compagnie = $nom_compagnie;
+    }
      public function hydrate(array $data): void {
           $this->id_vol = $data['id_vol'] ?? null;
           $this->numero_vol = $data['numero_vol'];

@@ -61,14 +61,15 @@ try {
           <li><a href="../Utilisateurs/UtilisateursRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion utilisateurs</button></a></li>
           <li><a href="../Vols/VolsRead.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Gestion vols</button></a></li>
      </ul>
-     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
-          <?php if (isset($_SESSION['utilisateur'])): ?>
-               <a href="../../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
-          <?php else: ?>
-               <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
-               <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
-          <?php endif; ?>
-     </div>
+    <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
+        <?php if (isset($_SESSION['utilisateur'])): ?>
+            <a href="../../views/Account/AccountView.php" class="btn btn-outline-primary">MON COMPTE</a>
+            <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
+        <?php else: ?>
+            <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
+            <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+        <?php endif; ?>
+    </div>
 </header>
 <div class="container my-5">
      <h2 class="mb-4 text-center">Modifier le vol</h2>

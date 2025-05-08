@@ -47,7 +47,8 @@ try {
     </ul>
     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
         <?php if (isset($_SESSION['utilisateur'])): ?>
-            <a href="../../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
+            <a href="../../views/Account/AccountView.php" class="btn btn-outline-primary">MON COMPTE</a>
+            <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
         <?php else: ?>
             <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
             <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
