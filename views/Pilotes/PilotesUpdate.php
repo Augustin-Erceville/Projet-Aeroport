@@ -27,7 +27,7 @@ if (!$pilote) {
      exit();
 }
 
-$utilisateurs = $utilisateurRepo->getUtilisateurs();
+$utilisateurs = $utilisateurRepo->getUsers();
 $avions = $avionRepo->getAvions();
 ?>
 
@@ -57,8 +57,8 @@ $avions = $avionRepo->getAvions();
                <select class="form-select" id="ref_utilisateur" name="ref_utilisateur" required>
                     <option value="">-- Sélectionner un utilisateur --</option>
                     <?php foreach ($utilisateurs as $utilisateur): ?>
-                         <option value="<?= htmlspecialchars($utilisateur->getIdUtilisateur()) ?>"
-                              <?= $pilote->getRefUtilisateur() == $utilisateur->getIdUtilisateur() ? 'selected' : '' ?>>
+                         <option value="<?= htmlspecialchars($utilisateur->getIdUser()) ?>"
+                              <?= $pilote->getRefUtilisateur() == $utilisateur->getIdUser() ? 'selected' : '' ?>>
                               <?= htmlspecialchars($utilisateur->getPrenom() . ' ' . $utilisateur->getNom()) ?>
                          </option>
                     <?php endforeach; ?>
@@ -97,6 +97,4 @@ $avions = $avionRepo->getAvions();
           </div>
      </form>
 </div>
-
-</body>
-</html>
+<?php include '../Footer.php'; ?>

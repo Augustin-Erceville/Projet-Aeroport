@@ -10,15 +10,16 @@
      <ul class="nav col-md-4 justify-content-end align-items-center">
           <?php if (isset($_SESSION['utilisateur'])): ?>
                <li class="nav-item d-flex align-items-center me-3">
-                    <span class="text-light">Connecté : <?= htmlspecialchars($_SESSION['utilisateur']['prenom']) ?></span>
+                    <span class="text-light">Connecté : <?= htmlspecialchars($_SESSION['utilisateur']['prenom']) ?> <?= htmlspecialchars($_SESSION['utilisateur']['nom']) ?></span>
                     <div class="spinner-grow text-success ms-3" style="width: 2rem; height: 2rem;" role="status">
                          <span class="visually-hidden"></span>
                     </div>
                </li>
           <?php else: ?>
                <li class="nav-item d-flex align-items-center me-3">
+                   <span class="text-light">Déconnecté</span>
                     <div class="spinner-grow text-danger ms-3" style="width: 2rem; height: 2rem;" role="status">
-                         <span class="visually-hidden"></span>
+                        <span class="visually-hidden"></span>
                     </div>
                </li>
           <?php endif; ?>
@@ -30,8 +31,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</body>
-</html>
-
 </body>
 </html>

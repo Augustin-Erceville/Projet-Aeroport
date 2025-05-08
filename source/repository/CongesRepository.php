@@ -1,76 +1,60 @@
 <?php
+require_once __DIR__ . '/../model/CongesModel.php';
 
-class CongesRepository {
-     private $pdo;
+class CongesRepository
+{
+    private \PDO $bdd;
 
-     public function __construct($pdo) {
-          $this->pdo = $pdo;
-     }
+    public function __construct(\PDO $bdd)
+    {
+        $this->bdd = $bdd;
+        $this->bdd->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    }
+    public function createConge(CongesModel $conge): void
+    {
+        $query = $this->bdd->prepare(
+            "INSERT INTO conges (ref_pilote, date_debut, date_fin) 
+             VALUES (:ref_pilote, :date_debut, :date_fin)"
+        );
 
-     public function createConge(CongesModel $conge) {
-          $query = "INSERT INTO conges (ref_pilote, date_debut, date_fin) 
-                  VALUES (:ref_pilote, :date_debut, :date_fin)";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([
-               ':ref_pilote' => $conge->getRefPilote(),
-               ':date_debut' => $conge->getDateDebut(),
-               ':date_fin' => $conge->getDateFin(),
-          ]);
-          $conge->setId($this->pdo->lastInsertId());
-          return $conge;
-     }
+        $query->execute([
+            'ref_pilote' => $conge->getRefPilote(),
+            'date_debut' => $conge->getDateDebut(),
+            'date_fin'   => $conge->getDateFin(),
+        ]);
+    }
+    public function getConges(): array
+    {
+        $query = $this->bdd->query("SELECT * FROM V_conges");
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-     public function getConge($id) {
-          $query = "SELECT * FROM conges WHERE id_conge = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function getCongeById(int $id): ?CongesModel
+    {
+        $query = $this->bdd->prepare("SELECT * FROM conges WHERE id_conge = :id");
+        $query->execute(['id' => $id]);
+        $data = $query->fetch(\PDO::FETCH_ASSOC);
 
-          if ($row) {
-               return new CongesModel(
-                    $row['id_conge'],
-                    $row['ref_pilote'],
-                    $row['date_debut'],
-                    $row['date_fin']
-               );
-          }
-          return null;
-     }
+        return $data ? new CongesModel($data) : null;
+    }
+    public function updateConge(CongesModel $conge): bool
+    {
+        $query = $this->bdd->prepare(
+            "UPDATE conges 
+             SET ref_pilote = :ref_pilote, date_debut = :date_debut, date_fin = :date_fin 
+             WHERE id_conge = :id_conge"
+        );
 
-     public function getCongesByPilote($piloteId) {
-          $query = "SELECT * FROM conges WHERE ref_pilote = :ref_pilote";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':ref_pilote' => $piloteId]);
-          $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-          $conges = [];
-          foreach ($rows as $row) {
-               $conges[] = new CongesModel(
-                    $row['id_conge'],
-                    $row['ref_pilote'],
-                    $row['date_debut'],
-                    $row['date_fin']
-               );
-          }
-          return $conges;
-     }
-
-     public function updateConge(CongesModel $conge) {
-          $query = "UPDATE conges 
-                  SET ref_pilote = :ref_pilote, date_debut = :date_debut, date_fin = :date_fin 
-                  WHERE id_conge = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([
-               ':ref_pilote' => $conge->getRefPilote(),
-               ':date_debut' => $conge->getDateDebut(),
-               ':date_fin' => $conge->getDateFin(),
-               ':id' => $conge->getId(),
-          ]);
-     }
-
-     public function deleteConge($id) {
-          $query = "DELETE FROM conges WHERE id_conge = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
-     }
+        return $query->execute([
+            'id_conge'    => $conge->getIdConge(),
+            'ref_pilote'  => $conge->getRefPilote(),
+            'date_debut'  => $conge->getDateDebut(),
+            'date_fin'    => $conge->getDateFin(),
+        ]);
+    }
+    public function deleteConge(int $id): bool
+    {
+        $query = $this->bdd->prepare("DELETE FROM conges WHERE id_conge = :id");
+        return $query->execute(['id' => $id]);
+    }
 }

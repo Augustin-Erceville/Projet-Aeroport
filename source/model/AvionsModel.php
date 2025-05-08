@@ -1,6 +1,6 @@
 <?php
 
-class AvionModel
+class AvionsModel
 {
      private $id_avion;
      private $immatriculation;

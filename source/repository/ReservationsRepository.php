@@ -1,85 +1,84 @@
 <?php
 
-class ReservationsRepository {
-     private $pdo;
+require_once __DIR__ . '/../model/ReservationsModel.php';
 
-     public function __construct($pdo) {
-          $this->pdo = $pdo;
-     }
+class ReservationsRepository
+{
+    private PDO $connexion;
 
-     public function createReservation(ReservationsModel $reservation) {
-          $query = "INSERT INTO reservations (ref_utilisateur, ref_vol, classe, statut, date_reservation) 
-                  VALUES (:ref_utilisateur, :ref_vol, :classe, :statut, :date_reservation)";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([
-               ':ref_utilisateur' => $reservation->getRefUtilisateur(),
-               ':ref_vol' => $reservation->getRefVol(),
-               ':classe' => $reservation->getClasse(),
-               ':statut' => $reservation->getStatut(),
-               ':date_reservation' => $reservation->getDateReservation(),
-          ]);
-          $reservation->setId($this->pdo->lastInsertId());
-          return $reservation;
-     }
+    public function __construct(PDO $connexion)
+    {
+        $this->connexion = $connexion;
+    }
 
-     public function getReservation($id) {
-          $query = "SELECT * FROM reservations WHERE id_reservation = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
-          $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    public function getAll(): array
+    {
+        $stmt = $this->connexion->query("SELECT * FROM v_reservations");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-          if ($row) {
-               return new ReservationsModel(
-                    $row['id_reservation'],
-                    $row['ref_utilisateur'],
-                    $row['ref_vol'],
-                    $row['classe'],
-                    $row['statut'],
-                    $row['date_reservation']
-               );
-          }
-          return null;
-     }
+    public function getReservations(): array
+    {
+        $stmt = $this->connexion->query("SELECT * FROM reservations");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-     public function getReservationsByUser($userId) {
-          $query = "SELECT * FROM reservations WHERE ref_utilisateur = :ref_utilisateur";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':ref_utilisateur' => $userId]);
-          $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    public function getById(int $id): ?ReservationsModel
+    {
+        $stmt = $this->connexion->prepare("SELECT * FROM reservations WHERE id_reservation = :id_reservation");
+        $stmt->bindParam(':id_reservation', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-          $reservations = [];
-          foreach ($rows as $row) {
-               $reservations[] = new ReservationsModel(
-                    $row['id_reservation'],
-                    $row['ref_utilisateur'],
-                    $row['ref_vol'],
-                    $row['classe'],
-                    $row['statut'],
-                    $row['date_reservation']
-               );
-          }
-          return $reservations;
-     }
+        if ($row) {
+            return new ReservationsModel($row);
+        }
 
-     public function updateReservation(ReservationsModel $reservation) {
-          $query = "UPDATE reservations 
-                  SET ref_utilisateur = :ref_utilisateur, ref_vol = :ref_vol, classe = :classe, statut = :statut, 
-                      date_reservation = :date_reservation 
-                  WHERE id_reservation = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([
-               ':ref_utilisateur' => $reservation->getRefUtilisateur(),
-               ':ref_vol' => $reservation->getRefVol(),
-               ':classe' => $reservation->getClasse(),
-               ':statut' => $reservation->getStatut(),
-               ':date_reservation' => $reservation->getDateReservation(),
-               ':id' => $reservation->getId(),
-          ]);
-     }
+        return null;
+    }
 
-     public function deleteReservation($id) {
-          $query = "DELETE FROM reservations WHERE id_reservation = :id";
-          $stmt = $this->pdo->prepare($query);
-          $stmt->execute([':id' => $id]);
-     }
+    public function add(ReservationsModel $reservation): bool
+    {
+        $stmt = $this->connexion->prepare(
+            "INSERT INTO reservations (ref_utilisateur, ref_vol, classe, statut, date_reservation)
+             VALUES (:ref_utilisateur, :ref_vol, :classe, :statut, :date_reservation)"
+        );
+
+        return $stmt->execute([
+            ':ref_utilisateur' => $reservation->getRef_utilisateur(),
+            ':ref_vol' => $reservation->getRef_vol(),
+            ':classe' => $reservation->getClasse(),
+            ':statut' => $reservation->getStatut(),
+            ':date_reservation' => $reservation->getDate_reservation()
+        ]);
+    }
+
+    public function update(ReservationsModel $reservation): bool
+    {
+        $stmt = $this->connexion->prepare(
+            "UPDATE reservations
+             SET ref_utilisateur = :ref_utilisateur,
+                 ref_vol = :ref_vol,
+                 classe = :classe,
+                 statut = :statut,
+                 date_reservation = :date_reservation
+             WHERE id_reservation = :id_reservation"
+        );
+
+        return $stmt->execute([
+            ':ref_utilisateur' => $reservation->getRef_utilisateur(),
+            ':ref_vol' => $reservation->getRef_vol(),
+            ':classe' => $reservation->getClasse(),
+            ':statut' => $reservation->getStatut(),
+            ':date_reservation' => $reservation->getDate_reservation(),
+            ':id_reservation' => $reservation->getId_reservation()
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->connexion->prepare("DELETE FROM reservations WHERE id_reservation = :id_reservation");
+        $stmt->bindParam(':id_reservation', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }

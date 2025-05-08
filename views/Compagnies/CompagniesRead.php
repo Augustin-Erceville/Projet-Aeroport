@@ -45,12 +45,14 @@ $compagnies = $compagnieRepo->getCompagnies();
         <?php endif; ?>
     </div>
 </header>
+
 <div class="mx-4">
     <div class="row">
-        <h4 class="text-center text-uppercase">Liste des compagnies aériennes</h4>
+        <h4 class="text-center text-uppercase">Liste des compagnies</h4>
         <a href="CompagniesCreate.php" class="btn btn-outline-success text-uppercase">Ajouter une compagnie</a>
     </div>
 </div>
+
 <div class="row my-3">
     <div class="col-1"></div>
     <table class="col table table-striped">
