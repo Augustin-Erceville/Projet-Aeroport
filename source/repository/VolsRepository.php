@@ -31,7 +31,6 @@ class VolsRepository {
         $stmt = $this->bdd->query("SELECT * FROM v_vols");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function getVolById(int $id): ?VolModel {
         $query = "SELECT * FROM vols WHERE id_vol = :id";
         $stmt = $this->bdd->prepare($query);
@@ -43,7 +42,6 @@ class VolsRepository {
             $vol->hydrate($row);
             return $vol;
         }
-
         return null;
     }
 

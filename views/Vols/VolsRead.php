@@ -88,7 +88,7 @@ try {
                       <td><?= htmlspecialchars($vol['Aéroport arrivée'] ?? '') ?></td>
                       <td><?= htmlspecialchars($vol['Date départ'] ?? '') ?></td>
                       <td><?= htmlspecialchars($vol['Date arrivée'] ?? '') ?></td>
-                      <td><?= htmlspecialchars(number_format($vol['Prix'] ?? 0, 2, ',', ' ')) ?></td>
+                      <td><?= htmlspecialchars(number_format($vol['Prix'] ?? 0, 2, ',', ' ')) ?> €</td>
                       <td><?= htmlspecialchars($vol['Statut'] ?? '') ?></td>
                       <td>
                           <a href="VolsUpdate.php?id=<?= htmlspecialchars($vol['ID'] ?? '') ?>" class="btn btn-warning btn-sm">✏️</a>
