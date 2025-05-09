@@ -25,10 +25,10 @@ try {
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom bg-dark">
     <div class="col-2 ms-3 mb-2 mb-md-0 text-light">
-        <a href="../Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
-            <img src="../../documentation/img/Logo.png" style="max-width: 15%; height: auto;">
-            <div class="fs-4 text-light">AEROPORTAL</div>
-        </a>
+         <a href="../Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
+              <img src="../documentation/img/Logo.png" class="rounded-circle mx-3" style="max-width: 15%; height: auto;">
+              <div class="fs-4 text-light">AEROPORTAL</div>
+         </a>
     </div>
     <ul class="nav col mb-2 justify-content-center mb-md-0">
         <li><a href="../Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-info">Acceuil</button></a></li>

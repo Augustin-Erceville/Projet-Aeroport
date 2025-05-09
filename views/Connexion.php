@@ -9,10 +9,10 @@
 </head>
 <body>
 <header class="d-flex flex-wrap align-items-center justify-content-between py-3 mb-4 border-bottom bg-dark px-3">
-    <a href="Acceuil.php" class="d-flex align-items-center text-light text-decoration-none">
-        <img src="../documentation/img/Logo.png" alt="Logo AEROPORTAL" style="height: 40px; width: auto;" class="me-2">
-        <span class="fs-4">AEROPORTAL</span>
-    </a>
+     <a href="Acceuil.php" class="d-inline-flex link-body-emphasis text-decoration-none">
+          <img src="../documentation/img/Logo.png" class="rounded-circle mx-3" style="max-width: 15%; height: auto;">
+          <div class="fs-4 text-light">AEROPORTAL</div>
+     </a>
 
     <ul class="nav">
         <li class="nav-item"><a href="Acceuil.php" class="btn btn-outline-info me-2">Accueil</a></li>
