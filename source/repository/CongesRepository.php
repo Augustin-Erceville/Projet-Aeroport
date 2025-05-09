@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/../model/CongesModel.php';
-
 class CongesRepository
 {
     private \PDO $bdd;
@@ -28,7 +27,18 @@ class CongesRepository
         $query = $this->bdd->query("SELECT * FROM V_conges");
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
+     public function getAllConges(): array {
+          $stmt = $this->bdd->query("SELECT * FROM conges");
+          $conges = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $conge = new CongesModel();
+               $conge->hydrate($row);
+               $conges[] = $conge;
+          }
+
+          return $conges;
+     }
     public function getCongeById(int $id): ?CongesModel
     {
         $query = $this->bdd->prepare("SELECT * FROM conges WHERE id_conge = :id");

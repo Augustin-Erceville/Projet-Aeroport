@@ -53,8 +53,18 @@ class AvionsRepository {
         }
         return null;
     }
+     public function getAllAvions(): array {
+          $stmt = $this->bdd->query("SELECT * FROM avions");
+          $avions = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $avion = new AvionsModel();
+               $avion->hydrate($row);
+               $avions[] = $avion;
+          }
 
+          return $avions;
+     }
     public function updateAvion(AvionsModel $avion) {
           $sql = "UPDATE avions SET immatriculation = :immatriculation, modele = :modele, capacite = :capacite, ref_compagnie = :ref_compagnie WHERE id_avion = :id_avion";
           $stmt = $this->bdd->prepare($sql);

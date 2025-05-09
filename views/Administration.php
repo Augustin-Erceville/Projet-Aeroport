@@ -1,4 +1,34 @@
-<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) session_start();
+
+require_once __DIR__ . '/../source/bdd/config.php';
+require_once __DIR__ . '/../source/repository/AvionsRepository.php';
+require_once __DIR__ . '/../source/repository/CompagniesRepository.php';
+require_once __DIR__ . '/../source/repository/CongesRepository.php';
+require_once __DIR__ . '/../source/repository/PilotesRepository.php';
+require_once __DIR__ . '/../source/repository/ReservationsRepository.php';
+require_once __DIR__ . '/../source/repository/UtilisateursRepository.php';
+require_once __DIR__ . '/../source/repository/VolsRepository.php';
+
+$config = new Config();
+$bdd = $config->connexion();
+
+$avionsRepo = new AvionsRepository($bdd);
+$compagniesRepo = new CompagniesRepository($bdd);
+$congesRepo = new CongesRepository($bdd);
+$pilotesRepo = new PilotesRepository($bdd);
+$reservationsRepo = new ReservationsRepository($bdd);
+$utilisateursRepo = new UtilisateursRepository($bdd);
+$volsRepo = new VolsRepository($bdd);
+
+$nbAvions = count($avionsRepo->getAllAvions());
+$nbCompagnies = count($compagniesRepo->getAllCompagnies()) ;
+$nbConges = count($congesRepo->getAllConges());
+$nbPilotes = count($pilotesRepo->getAllPilotes());
+$nbReservations = count($reservationsRepo->getAllReservations());
+$nbUtilisateurs = count($utilisateursRepo->getAllUtilisateurs());
+$nbVols = count($volsRepo->getAllVols());
+?>
      <!doctype html>
      <html lang="fr">
      <head>
@@ -39,6 +69,68 @@
 <div class="mx-4">
      <div class="row">
           <h4 class="text-center text-uppercase">Administration de Aeroportal</h4>
+     </div>
+</div>
+<div class="container mt-5">
+     <h1 class="text-center mb-4">Tableau de Bord Administrateur</h1>
+
+     <div class="row g-4">
+          <div class="col-md-3">
+               <div class="card text-white bg-primary">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Avions</h5>
+                         <p class="card-text fs-4"><?= $nbAvions ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-3">
+               <div class="card text-white bg-success">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Compagnies</h5>
+                         <p class="card-text fs-4"><?= $nbCompagnies ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-3">
+               <div class="card text-white bg-warning">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Congés</h5>
+                         <p class="card-text fs-4"><?= $nbConges ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-3">
+               <div class="card text-white bg-danger">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Pilotes</h5>
+                         <p class="card-text fs-4"><?= $nbPilotes ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-4">
+               <div class="card text-white bg-info">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Réservations</h5>
+                         <p class="card-text fs-4"><?= $nbReservations ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-4">
+               <div class="card text-white bg-secondary">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Utilisateurs</h5>
+                         <p class="card-text fs-4"><?= $nbUtilisateurs ?></p>
+                    </div>
+               </div>
+          </div>
+          <div class="col-md-4">
+               <div class="card text-white bg-dark">
+                    <div class="card-body text-center">
+                         <h5 class="card-title">Vols</h5>
+                         <p class="card-text fs-4"><?= $nbVols ?></p>
+                    </div>
+               </div>
+          </div>
      </div>
 </div>
 <?php include 'Footer.php'; ?>

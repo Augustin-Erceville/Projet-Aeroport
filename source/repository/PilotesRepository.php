@@ -22,7 +22,18 @@ class PilotesRepository
           ]);
           $pilote->setIdPilote($this->bdd->lastInsertId());
      }
+     public function getAllPilotes(): array {
+          $stmt = $this->bdd->query("SELECT * FROM pilotes");
+          $pilotes = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $pilote = new PiloteModel();
+               $pilote->hydrate($row);
+               $pilotes[] = $pilote;
+          }
+
+          return $pilotes;
+     }
      public function getPilotes(): array
      {
           $query = "SELECT * FROM pilotes";

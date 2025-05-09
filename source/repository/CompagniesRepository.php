@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../model/CompagniesModel.php';
 class CompagniesRepository {
      private PDO $pdo;
 
@@ -47,7 +47,7 @@ class CompagniesRepository {
           $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
           if ($row) {
-               return new CompagnieModel(
+               return new CompagniesModel(
                     (int)$row['id_compagnie'],
                     $row['nom'],
                     $row['pays']
@@ -55,7 +55,18 @@ class CompagniesRepository {
           }
           return null;
      }
+     public function getAllCompagnies(): array {
+          $stmt = $this->pdo->query("SELECT * FROM compagnies");
+          $compagnies = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $compagnie = new CompagnieModel();
+               $compagnie->hydrate($row);
+               $compagnies[] = $compagnie;
+          }
+
+          return $compagnies;
+     }
      public function updateCompagnie(CompagnieModel $compagnie): bool {
           $sql = "UPDATE compagnies
                 SET nom = :nom, pays = :pays

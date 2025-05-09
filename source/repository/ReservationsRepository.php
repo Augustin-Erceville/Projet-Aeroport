@@ -30,7 +30,18 @@ class ReservationsRepository
 
         return $row ? new ReservationsModel($row) : null;
     }
+     public function getAllReservations(): array {
+          $stmt = $this->bdd->query("SELECT * FROM reservations");
+          $reservations = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $reservation = new ReservationsModel();
+               $reservation->hydrate($row);
+               $reservations[] = $reservation;
+          }
+
+          return $reservations;
+     }
     public function getReservationsByUserId(int $idUser): array
     {
         $stmt = $this->bdd->prepare("SELECT * FROM reservations WHERE ref_utilisateur = :idUser");

@@ -43,7 +43,18 @@ class UtilisateursRepository
         $data = $query->fetch(\PDO::FETCH_ASSOC);
         return $data ? new UtilisateursModel($data) : null;
     }
+     public function getAllUtilisateurs(): array {
+          $stmt = $this->bdd->query("SELECT * FROM utilisateurs");
+          $utilisateurs = [];
 
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+               $utilisateur = new UtilisateursModel();
+               $utilisateur->hydrate($row);
+               $utilisateurs[] = $utilisateur;
+          }
+
+          return $utilisateurs;
+     }
     public function ajouterUtilisateur(UtilisateursModel $utilisateur): void
     {
         $query = $this->bdd->prepare("INSERT INTO utilisateurs 
