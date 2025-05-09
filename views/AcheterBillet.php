@@ -70,7 +70,19 @@ $volsDisponibles = $volRepo->getAllVols();
                                 <strong>Date de départ :</strong> <?= htmlspecialchars($vol->getDateDepart()) ?><br>
                                 <strong>Prix :</strong> <?= htmlspecialchars(number_format($vol->getPrix(), 2)) ?> €
                             </p>
-                            <a href="#" class="btn btn-primary">Acheter ce billet</a>
+                            <form action="../source/treatment/ReservationRapide.php" method="get">
+                                <input type="hidden" name="id_vol" value="<?= $vol->getIdVol() ?>">
+
+                                <div class="mb-2">
+                                    <select name="classe" class="form-select form-select-sm" required>
+                                        <option value="Économique">Classe Économique</option>
+                                        <option value="Affaires">Classe Affaires</option>
+                                        <option value="Première">Classe Première</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary w-100">Réserver</button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -81,8 +93,5 @@ $volsDisponibles = $volRepo->getAllVols();
     </div>
 </div>
 
-<?php include 'Footer.php'; ?>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoIIfJcLyjU29tka7Sk3YSA8l7IgGKmFckcImFV8Qbsw3" crossorigin="anonymous"></script>
-</body>
-</html>
+<?php include 'Footer.php'; ?>

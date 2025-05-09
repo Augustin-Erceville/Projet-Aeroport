@@ -5,6 +5,8 @@ class ReservationsModel
     private $id_reservation;
     private $ref_utilisateur;
     private $ref_vol;
+    private string $destination;
+    private string $dateDepart;
     private $classe;
     private $statut;
     private $date_reservation;
@@ -23,10 +25,21 @@ class ReservationsModel
             if (method_exists($this, $method)) {
                 $this->$method($value);
             }
+            if (isset($data['ref_vol'])) {
+                $this->ref_vol = (int) $data['ref_vol'];
+            }
+            if (isset($data['Destination'])) {
+                $this->destination = $data['Destination'];
+            } else {
+                $this->destination = 'Non renseignée';
+            }
+            if (isset($data['DateDepart'])) {
+                $this->dateDepart = $data['DateDepart'];
+            }
+
         }
     }
 
-    // Getters
     public function getId_reservation(): int
     {
         return $this->id_reservation;
@@ -37,9 +50,12 @@ class ReservationsModel
         return $this->ref_utilisateur;
     }
 
-    public function getRef_vol(): int
+    public function getRefvol(): int
     {
         return $this->ref_vol;
+    }
+    public function getDestination(): string {
+        return $this->destination;
     }
 
     public function getClasse(): string
@@ -57,7 +73,6 @@ class ReservationsModel
         return $this->date_reservation;
     }
 
-    // Setters
     public function setId_reservation(int $id_reservation): void
     {
         $this->id_reservation = $id_reservation;
@@ -85,5 +100,14 @@ class ReservationsModel
     public function setDate_reservation(string $date_reservation): void
     {
         $this->date_reservation = $date_reservation;
+    }
+    public function getDateDepart(): string
+    {
+        return $this->dateDepart ?? 'Non précisée';
+    }
+
+    public function setDateDepart(string $dateDepart): void
+    {
+        $this->dateDepart = $dateDepart;
     }
 }

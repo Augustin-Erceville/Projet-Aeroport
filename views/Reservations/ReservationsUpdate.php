@@ -86,7 +86,7 @@ $vols = $volRepository->getVols();
             <select class="form-select" name="ref_vol" id="ref_vol" required>
                 <?php foreach ($vols as $vol): ?>
                     <option value="<?= htmlspecialchars($vol['id_vol']) ?>"
-                        <?= $vol['id_vol'] == $reservation->getRef_vol() ? 'selected' : '' ?>>
+                        <?= $vol['id_vol'] == $reservation->getRefvol() ? 'selected' : '' ?>>
                         <?= htmlspecialchars($vol['numero_vol']) ?>
                     </option>
                 <?php endforeach; ?>

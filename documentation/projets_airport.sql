@@ -52,7 +52,10 @@ CREATE TABLE IF NOT EXISTS `conges` (
                                         `date_fin` date NOT NULL COMMENT 'Fin',
                                         PRIMARY KEY (`id_conge`),
                                         KEY `ref_pilote` (`ref_pilote`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `conges` (`id_conge`, `ref_pilote`, `date_debut`, `date_fin`) VALUES
+    (3, 7, '2025-05-19', '2025-06-20');
 
 DROP TABLE IF EXISTS `pilotes`;
 CREATE TABLE IF NOT EXISTS `pilotes` (
@@ -63,7 +66,11 @@ CREATE TABLE IF NOT EXISTS `pilotes` (
                                          PRIMARY KEY (`id_pilote`),
                                          UNIQUE KEY `ref_utilisateur` (`ref_utilisateur`),
                                          KEY `ref_avion` (`ref_avion`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `pilotes` (`id_pilote`, `ref_utilisateur`, `ref_avion`, `disponible`) VALUES
+                                                                                      (6, 5, 4, 'Disponible'),
+                                                                                      (7, 3, 8, 'Indisponible');
 
 DROP TABLE IF EXISTS `reservations`;
 CREATE TABLE IF NOT EXISTS `reservations` (
@@ -76,10 +83,14 @@ CREATE TABLE IF NOT EXISTS `reservations` (
                                               PRIMARY KEY (`id_reservation`),
                                               KEY `ref_utilisateur` (`ref_utilisateur`),
                                               KEY `ref_vol` (`ref_vol`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `reservations` (`id_reservation`, `ref_utilisateur`, `ref_vol`, `classe`, `statut`, `date_reservation`) VALUES
-    (8, 5, 1, 'Économique', 'confirmé', '2025-05-07 18:06:00');
+                                                                                                                        (8, 5, 1, 'Économique', 'confirmé', '2025-05-07 18:06:00'),
+                                                                                                                        (9, 15, 7, 'Affaires', 'confirmé', '2025-05-09 04:13:45'),
+                                                                                                                        (10, 15, 8, 'Affaires', 'confirmé', '2025-05-09 04:13:49'),
+                                                                                                                        (11, 15, 8, 'Affaires', 'confirmé', '2025-05-09 04:14:12'),
+                                                                                                                        (12, 15, 5, 'Première', 'confirmé', '2025-05-09 04:30:05');
 
 DROP TABLE IF EXISTS `utilisateurs`;
 CREATE TABLE IF NOT EXISTS `utilisateurs` (
@@ -95,15 +106,14 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
                                               `role` enum('Client','Administrateur') NOT NULL DEFAULT 'Client' COMMENT 'Rôle de l''utilisateur',
                                               PRIMARY KEY (`id_utilisateur`),
                                               UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO `utilisateurs` (`id_utilisateur`, `prenom`, `nom`, `telephone`, `email`, `mot_de_passe`, `date_naissance`, `ville_residence`, `inscription`) VALUES
-                                                                                                                                                             (3, 'Lucas', 'Martin', '0612345678', 'lucas.martin@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1995-03-15', 'Paris', '2025-05-08 16:52:23'),
-                                                                                                                                                             (4, 'Emma', 'Durand', '0623456789', 'emma.durand@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1998-07-22', 'Lyon', '2025-05-08 16:52:23'),
-                                                                                                                                                             (5, 'Nathan', 'Bernard', '0634567890', 'nathan.bernard@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1992-11-05', 'Marseille', '2025-05-08 16:52:23'),
-                                                                                                                                                             (6, 'Chloé', 'Petit', '0645678901', 'chloe.petit@example.com', '$2y$10$abcdefghijklmnopqrstuv', '2000-01-30', 'Toulouse', '2025-05-08 16:52:23'),
-                                                                                                                                                             (8, 'Augustin', 'Rolland de Chambaudoin d\'Erceville', '0782706356', 'augustinderceville@gmail.com', '$2y$10$slmJCel7zLjCE/c0artN5euDYchY5Z4tIVth57mYLHD5/IjgPcdFq', '2000-09-22', 'Bondy', '2025-05-08 22:21:47'),
-                                                                                                                                                             (9, 'Augustin', 'd&#039;Erceville', '0782706356', 'a.erceville2000@gmail.com', '$2y$10$YfEwGRAhM6yj39bLyCjxzuF3X0if2wi/mbavBordgsbjq1TxTdluq', '2000-09-22', 'Villemomble', '2025-05-08 22:28:12');
+INSERT INTO `utilisateurs` (`id_utilisateur`, `prenom`, `nom`, `telephone`, `email`, `mot_de_passe`, `date_naissance`, `ville_residence`, `inscription`, `role`) VALUES
+                                                                                                                                                                     (3, 'Lucas', 'Martin', '0612345678', 'lucas.martin@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1995-03-15', 'Paris', '2025-05-08 16:52:23', 'Client'),
+                                                                                                                                                                     (4, 'Emma', 'Durand', '0623456789', 'emma.durand@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1998-07-22', 'Lyon', '2025-05-08 16:52:23', 'Client'),
+                                                                                                                                                                     (5, 'Nathan', 'Bernard', '0634567890', 'nathan.bernard@example.com', '$2y$10$abcdefghijklmnopqrstuv', '1992-11-05', 'Marseille', '2025-05-08 16:52:23', 'Client'),
+                                                                                                                                                                     (6, 'Chloé', 'Petit', '0645678901', 'chloe.petit@example.com', '$2y$10$abcdefghijklmnopqrstuv', '2000-01-30', 'Toulouse', '2025-05-08 16:52:23', 'Client'),
+                                                                                                                                                                     (15, 'Augustin', 'Erceville', '0782706356', 'a.erceville2000@gmail.com', '$2y$10$6/plG7s8RmdLhZATFKeRkeEwOj4wypBVnVQQrQBeygxfLCDJpnJka', '2000-09-22', 'Villemomble', '2025-05-09 03:39:28', 'Administrateur');
 
 DROP TABLE IF EXISTS `vols`;
 CREATE TABLE IF NOT EXISTS `vols` (
@@ -157,6 +167,8 @@ CREATE TABLE IF NOT EXISTS `v_reservations` (
                                                 `ID` int
     ,`Utilisateur` varchar(101)
     ,`Vol` varchar(10)
+    ,`Destination` varchar(100)
+    ,`DateDepart` datetime
     ,`Classe` enum('Économique','Affaires','Première')
     ,`Statut` enum('confirmé','annulé','en attente')
     ,`Date` datetime
@@ -189,7 +201,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 DROP TABLE IF EXISTS `v_reservations`;
 
 DROP VIEW IF EXISTS `v_reservations`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_reservations`  AS SELECT `r`.`id_reservation` AS `ID`, concat(`u`.`prenom`,' ',`u`.`nom`) AS `Utilisateur`, `v`.`numero_vol` AS `Vol`, `r`.`classe` AS `Classe`, `r`.`statut` AS `Statut`, `r`.`date_reservation` AS `Date` FROM ((`reservations` `r` join `utilisateurs` `u` on((`r`.`ref_utilisateur` = `u`.`id_utilisateur`))) join `vols` `v` on((`r`.`ref_vol` = `v`.`id_vol`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `v_reservations`  AS SELECT `r`.`id_reservation` AS `ID`, concat(`u`.`prenom`,' ',`u`.`nom`) AS `Utilisateur`, `v`.`numero_vol` AS `Vol`, `v`.`aeroport_arrivee` AS `Destination`, `v`.`date_depart` AS `DateDepart`, `r`.`classe` AS `Classe`, `r`.`statut` AS `Statut`, `r`.`date_reservation` AS `Date` FROM ((`reservations` `r` join `utilisateurs` `u` on((`r`.`ref_utilisateur` = `u`.`id_utilisateur`))) join `vols` `v` on((`r`.`ref_vol` = `v`.`id_vol`))) ;
 DROP TABLE IF EXISTS `v_vols`;
 
 DROP VIEW IF EXISTS `v_vols`;

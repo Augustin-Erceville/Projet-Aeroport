@@ -54,11 +54,53 @@ $prochainsVols = $volRepo->getNextFiveVols();
 </header>
 
 <div class="container my-4">
-    <div class="row">
-        <h1 class="text-center text-uppercase mb-4">Bienvenue chez Aeroportal</h1>
+    <h1 class="text-center text-primary mb-4">Bienvenue sur Aéroportal</h1>
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8 text-center">
+            <p class="lead">
+                Aéroportal est votre plateforme centrale pour gérer tous les aspects liés à l'aéroport :
+                vols, réservations, compagnies aériennes, pilotes, enregistrements, et bien plus encore.
+            </p>
+            <p>
+                Que vous soyez un passager souhaitant réserver un billet ou un administrateur en charge des opérations aériennes,
+                notre interface simplifiée et intuitive est là pour vous accompagner.
+            </p>
+        </div>
     </div>
+
+    <div class="row g-4 text-center">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">🛩️ Réservez un vol</h5>
+                    <p class="card-text">Trouvez et réservez un billet en quelques clics, selon vos préférences de date et destination.</p>
+                    <a href="AcheterBillet.php" class="btn btn-outline-primary">Acheter un billet</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">📋 Suivi de réservation</h5>
+                    <p class="card-text">Consultez, modifiez ou annulez vos réservations existantes facilement depuis votre espace.</p>
+                    <a href="Reservation.php" class="btn btn-outline-primary">Mes réservations</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">ℹ️ Informations générales</h5>
+                    <p class="card-text">Retrouvez toutes les informations utiles : horaires, consignes, assistance et règlement.</p>
+                    <a href="Information.php" class="btn btn-outline-primary">En savoir plus</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
-        <h2 class="text-center text-info mb-4">Prochains départs</h2>
+        <h2 class="text-center text-info my-3">Prochains départs</h2>
 
         <?php if (!empty($prochainsVols)): ?>
             <?php foreach ($prochainsVols as $vol): ?>
@@ -78,6 +120,14 @@ $prochainsVols = $volRepo->getNextFiveVols();
             <?php endforeach; ?>
         <?php else: ?>
             <p class="text-center text-muted">Aucun vol disponible pour le moment.</p>
+        <?php endif; ?>
+    </div>
+    <div class="text-center mt-5">
+        <?php if (!isset($_SESSION['utilisateur'])): ?>
+            <a href="Connexion.php" class="btn btn-success btn-lg me-2">Se connecter</a>
+            <a href="Inscription.php" class="btn btn-outline-secondary btn-lg">Créer un compte</a>
+        <?php else: ?>
+            <a href="../views/Account/AccountView.php" class="btn btn-outline-info btn-lg">Accéder à mon compte</a>
         <?php endif; ?>
     </div>
 </div>
