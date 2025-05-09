@@ -1,9 +1,9 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) session_start();
+
 require_once '../source/bdd/config.php';
 require_once '../source/model/VolsModel.php';
 require_once '../source/repository/VolsRepository.php';
-
 $config = new Config();
 $bdd = $config->connexion();
 $volRepo = new VolsRepository($bdd);
@@ -16,7 +16,7 @@ $prochainsVols = $volRepo->getNextFiveVols();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AEROPORTAL - ACCUEIL</title>
+    <title>ACCUEIL • AEROPORTAL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -28,6 +28,7 @@ $prochainsVols = $volRepo->getNextFiveVols();
             <div class="fs-4 text-light">AEROPORTAL</div>
         </a>
     </div>
+
     <ul class="nav col mb-2 justify-content-center mb-md-0">
         <li><a href="Acceuil.php" class="nav-link px-2"><button type="button" class="btn btn-outline-info active">Accueil</button></a></li>
         <li><a href="AcheterBillet.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Acheter un billet</button></a></li>
@@ -35,7 +36,8 @@ $prochainsVols = $volRepo->getNextFiveVols();
         <li><a href="Reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes réservations</button></a></li>
         <li><a href="Information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
         <li><a href="Aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
-        <?php if (isset($_SESSION['utilisateur'])): ?>
+
+        <?php if (isset($_SESSION['utilisateur']) && $_SESSION['utilisateur']['role'] === 'Administrateur'): ?>
             <li><a href="Administration.php" class="nav-link px-2"><button type="button" class="btn btn-outline-warning">Administration</button></a></li>
         <?php endif; ?>
     </ul>

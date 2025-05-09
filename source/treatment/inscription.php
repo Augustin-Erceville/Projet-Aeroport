@@ -75,6 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         'mot_de_passe' => $hash,
         'date_naissance' => $date_naissance,
         'ville_residence' => $ville_residence,
+        'role' => 'Client'
     ]);
 
     try {

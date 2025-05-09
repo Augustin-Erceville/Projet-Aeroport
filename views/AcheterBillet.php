@@ -8,7 +8,6 @@ $config = new Config();
 $bdd = $config->connexion();
 $volRepo = new VolsRepository($bdd);
 
-// Récupérer tous les vols disponibles
 $volsDisponibles = $volRepo->getAllVols();
 ?>
 
@@ -17,7 +16,7 @@ $volsDisponibles = $volRepo->getAllVols();
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AEROPORTAL - ACHETER UN BILLET</title>
+    <title>BILLETS • AEROPORTAL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -37,6 +36,9 @@ $volsDisponibles = $volRepo->getAllVols();
         <li><a href="Reservation.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Mes réservations</button></a></li>
         <li><a href="Information.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Informations</button></a></li>
         <li><a href="Aide.php" class="nav-link px-2"><button type="button" class="btn btn-outline-light">Aide</button></a></li>
+        <?php if (isset($_SESSION['utilisateur']) && $_SESSION['utilisateur']['role'] === 'Administrateur'): ?>
+            <li><a href="Administration.php" class="nav-link px-2"><button type="button" class="btn btn-outline-warning">Administration</button></a></li>
+        <?php endif; ?>
     </ul>
 
     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">

@@ -34,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                    'email' => $user->getEmail(),
                    'telephone' => $user->getTelephone(),
                    'ville_residence' => $user->getVilleResidence(),
-                   'date_naissance' => $user->getDateNaissance()
+                   'date_naissance' => $user->getDateNaissance(),
+                   'role' => $user->getRole(),
                ];
 
                $_SESSION['success'] = "Connexion réussie. Bienvenue " . htmlspecialchars($user->getPrenom()) . " !";
@@ -51,7 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           exit();
      }
 } else {
-     // Redirection si accès non autorisé
      header("Location: ../../views/Connexion.php");
      exit();
 }

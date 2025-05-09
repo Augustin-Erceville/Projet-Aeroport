@@ -10,8 +10,9 @@ class UtilisateursModel
      private ?string $date_naissance = null;
      private ?string $ville_residence = null;
      private ?DateTime $inscription = null;
+    private ?string $role = null;
 
-     public function __construct(array $donnees = [])
+    public function __construct(array $donnees = [])
      {
           $this->hydrate($donnees);
      }
@@ -44,6 +45,10 @@ class UtilisateursModel
           if (isset($data['inscription'])) {
                $this->inscription = new DateTime($data['inscription']);
           }
+         if (isset($data['role'])) {
+             $this->role = $data['role'];
+         }
+
      }
 
      public function getIdUser()
@@ -141,4 +146,13 @@ class UtilisateursModel
                $this->inscription = null;
           }
      }
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): void
+    {
+        $this->role = $role;
+    }
 }

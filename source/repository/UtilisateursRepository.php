@@ -16,38 +16,39 @@ class UtilisateursRepository
             $users = [];
 
             while ($data = $query->fetch(\PDO::FETCH_ASSOC)) {
-                $users[] = new \UtilisateursModel($data);
+                $users[] = new UtilisateursModel($data);
             }
             return $users;
         } catch (\PDOException $e) {
             return [];
         }
     }
-    public function getUserById(int $id): ?\UtilisateursModel
+    public function getUserById(int $id): ?UtilisateursModel
     {
         try {
             $query = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE id_utilisateur = :id_utilisateur");
             $query->execute(['id_utilisateur' => $id]);
             $data = $query->fetch(\PDO::FETCH_ASSOC);
 
-            return $data ? new \UtilisateursModel($data) : null;
+            return $data ? new UtilisateursModel($data) : null;
         } catch (\PDOException $e) {
             return null;
         }
     }
 
-    public function getUserByEmail(string $email): ?\UtilisateursModel
+    public function getUserByEmail(string $email): ?UtilisateursModel
     {
         $query = $this->bdd->prepare("SELECT * FROM utilisateurs WHERE email = :email");
         $query->execute(['email' => $email]);
         $data = $query->fetch(\PDO::FETCH_ASSOC);
-        return $data ? new \UtilisateursModel($data) : null;
+        return $data ? new UtilisateursModel($data) : null;
     }
 
-    public function ajouterUtilisateur(\UtilisateursModel $utilisateur): void
+    public function ajouterUtilisateur(UtilisateursModel $utilisateur): void
     {
-        $query = $this->bdd->prepare("INSERT INTO utilisateurs (nom, prenom, telephone, email, mot_de_passe, date_naissance, ville_residence) 
-                                VALUES (:nom, :prenom, :telephone, :email, :mot_de_passe, :date_naissance, :ville_residence)");
+        $query = $this->bdd->prepare("INSERT INTO utilisateurs 
+        (nom, prenom, telephone, email, mot_de_passe, date_naissance, ville_residence, role) 
+        VALUES (:nom, :prenom, :telephone, :email, :mot_de_passe, :date_naissance, :ville_residence, :role)");
 
         $query->execute([
             'nom' => $utilisateur->getNom(),
@@ -56,20 +57,21 @@ class UtilisateursRepository
             'email' => $utilisateur->getEmail(),
             'mot_de_passe' => $utilisateur->getMotDePasse(),
             'date_naissance' => $utilisateur->getDateNaissance(),
-            'ville_residence' => $utilisateur->getVilleResidence()
+            'ville_residence' => $utilisateur->getVilleResidence(),
+            'role' => $utilisateur->getRole() ?? 'Client'
         ]);
     }
 
-    public function connexion($email, $password): ?\UtilisateursModel
+    public function connexion($email, $password): ?UtilisateursModel
     {
         try {
-            $sql = "SELECT * FROM utilisateurs WHERE email = :email";
+            $sql = "SELECT * FROM utilisateurs WHERE LOWER(email) = LOWER(:email)";
             $stmt = $this->bdd->prepare($sql);
             $stmt->execute(['email' => $email]);
             $data = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if (!empty($data) && password_verify($password, $data['mot_de_passe'])) {
-                return new \UtilisateursModel($data);
+                return new UtilisateursModel($data);
             }
 
             return null;
@@ -79,7 +81,7 @@ class UtilisateursRepository
         }
     }
 
-    public function updateUser(\UtilisateursModel $user): bool
+    public function updateUser(UtilisateursModel $user): bool
     {
         try {
             $req = $this->bdd->prepare(

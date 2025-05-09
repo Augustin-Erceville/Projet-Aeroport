@@ -1,5 +1,4 @@
 <?php
-re
 require_once __DIR__ . '/../model/PilotesModel.php';
 
 class PilotesRepository
@@ -51,7 +50,6 @@ class PilotesRepository
                $pilote->hydrate($row);
                return $pilote;
           }
-
           return null;
      }
 

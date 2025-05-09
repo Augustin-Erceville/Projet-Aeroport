@@ -3,10 +3,12 @@ if (session_status() === PHP_SESSION_NONE) session_start();
 
 require_once '../../source/bdd/config.php';
 require_once '../../source/repository/PilotesRepository.php';
+require_once '../../source/repository/UtilisateursRepository.php';
 
 $config = new Config();
 $bdd = $config->connexion();
 $piloteRepo = new PilotesRepository($bdd);
+$utilisateurRepo = new UtilisateursRepository($bdd);
 $pilotes = $piloteRepo->getPilotes();
 ?>
 
@@ -14,7 +16,7 @@ $pilotes = $piloteRepo->getPilotes();
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Liste des Vols</title>
+    <title>CONGÉS • ADMIN • AEROPORTAL</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -38,10 +40,10 @@ $pilotes = $piloteRepo->getPilotes();
     <div class="col-2 btn-group md-3 me-3 text-end" role="group" aria-label="Boutons utilisateur">
         <?php if (isset($_SESSION['utilisateur'])): ?>
             <a href="../../views/Account/AccountView.php" class="btn btn-outline-primary">MON COMPTE</a>
-            <a href="../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
+            <a href="../../source/treatment/deconnexion.php" class="btn btn-outline-danger">DÉCONNEXION</a>
         <?php else: ?>
-            <a href="Connexion.php" class="btn btn-outline-success">CONNEXION</a>
-            <a href="Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
+            <a href="../Connexion.php" class="btn btn-outline-success">CONNEXION</a>
+            <a href="../Inscription.php" class="btn btn-outline-primary">INSCRIPTION</a>
         <?php endif; ?>
     </div>
 </header>
@@ -61,7 +63,12 @@ $pilotes = $piloteRepo->getPilotes();
             <select class="form-select" id="ref_pilote" name="ref_pilote" required>
                 <option value="">-- Sélectionner un pilote --</option>
                 <?php foreach ($pilotes as $pilote): ?>
-                    <option value="<?= $pilote->getIdPilote() ?>"><?= $pilote->getIdPilote() ?></option>
+                    <?php
+                    $utilisateur = $utilisateurRepo->getUserById($pilote->getRefUtilisateur());
+                    ?>
+                    <option value="<?= $pilote->getIdPilote() ?>">
+                        <?= htmlspecialchars($utilisateur->getPrenom() . ' ' . $utilisateur->getNom()) ?>
+                    </option>
                 <?php endforeach; ?>
             </select>
         </div>
