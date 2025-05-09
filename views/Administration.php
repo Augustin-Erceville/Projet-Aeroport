@@ -66,65 +66,61 @@ $nbVols = count($volsRepo->getAllVols());
         <?php endif; ?>
     </div>
 </header>
-<div class="mx-4">
-     <div class="row">
+<div class="mx-3 my-3">
           <h4 class="text-center text-uppercase">Administration de Aeroportal</h4>
-     </div>
 </div>
-<div class="container mt-5">
-     <h1 class="text-center mb-4">Tableau de Bord Administrateur</h1>
-
+<div class="mx-3">
      <div class="row g-4">
-          <div class="col-md-3">
-               <div class="card text-white bg-primary">
+          <div class="col mx-1">
+               <div class="card text-white bg-primary bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Avions</h5>
                          <p class="card-text fs-4"><?= $nbAvions ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-3">
-               <div class="card text-white bg-success">
+          <div class="col mx-1">
+               <div class="card text-white bg-success bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Compagnies</h5>
                          <p class="card-text fs-4"><?= $nbCompagnies ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-3">
-               <div class="card text-white bg-warning">
+          <div class="col mx-1">
+               <div class="card text-white bg-warning bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Congés</h5>
                          <p class="card-text fs-4"><?= $nbConges ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-3">
-               <div class="card text-white bg-danger">
+          <div class="col mx-1">
+               <div class="card text-white bg-danger bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Pilotes</h5>
                          <p class="card-text fs-4"><?= $nbPilotes ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-4">
-               <div class="card text-white bg-info">
+          <div class="col mx-1">
+               <div class="card text-white bg-info bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Réservations</h5>
                          <p class="card-text fs-4"><?= $nbReservations ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-4">
-               <div class="card text-white bg-secondary">
+          <div class="col mx-1">
+               <div class="card text-white bg-secondary bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Utilisateurs</h5>
                          <p class="card-text fs-4"><?= $nbUtilisateurs ?></p>
                     </div>
                </div>
           </div>
-          <div class="col-md-4">
-               <div class="card text-white bg-dark">
+          <div class="col mx-1">
+               <div class="card text-white bg-dark bg-gradient">
                     <div class="card-body text-center">
                          <h5 class="card-title">Vols</h5>
                          <p class="card-text fs-4"><?= $nbVols ?></p>
