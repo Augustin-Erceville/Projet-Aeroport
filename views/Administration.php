@@ -129,4 +129,55 @@ $nbVols = count($volsRepo->getAllVols());
           </div>
      </div>
 </div>
+<div class="container my-5">
+     <div class="row">
+          <div class="col-md-6">
+               <h5 class="text-center mb-3">Répartition des entités</h5>
+               <canvas id="pieChart"></canvas>
+          </div>
+          <div class="col-md-6">
+               <h5 class="text-center mb-3">Volume par entité</h5>
+               <canvas id="barChart"></canvas>
+          </div>
+     </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labels = ['Avions', 'Compagnies', 'Congés', 'Pilotes', 'Réservations', 'Utilisateurs', 'Vols'];
+    const dataCounts = [<?= $nbAvions ?>, <?= $nbCompagnies ?>, <?= $nbConges ?>, <?= $nbPilotes ?>, <?= $nbReservations ?>, <?= $nbUtilisateurs ?>, <?= $nbVols ?>];
+
+    new Chart(document.getElementById('pieChart'), {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: dataCounts,
+                backgroundColor: ['#0d6efd', '#198754', '#ffc107', '#dc3545', '#0dcaf0', '#6c757d', '#212529']
+            }]
+        }
+    });
+
+    new Chart(document.getElementById('barChart'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Nombre d\'enregistrements',
+                data: dataCounts,
+                backgroundColor: '#0d6efd'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            }
+        }
+    });
+</script>
 <?php include 'Footer.php'; ?>
