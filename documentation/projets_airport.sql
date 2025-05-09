@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `utilisateurs` (
                                               `date_naissance` date NOT NULL COMMENT 'Date de naissance',
                                               `ville_residence` varchar(50) NOT NULL COMMENT 'Ville de résidence',
                                               `inscription` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Date d''inscription',
+                                              `role` enum('Client','Administrateur') NOT NULL DEFAULT 'Client' COMMENT 'Rôle de l''utilisateur',
                                               PRIMARY KEY (`id_utilisateur`),
                                               UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
